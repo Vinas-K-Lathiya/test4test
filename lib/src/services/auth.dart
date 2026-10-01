@@ -15,8 +15,7 @@ class AuthService {
 
   Future<void> _init() async {
     if (_initialized) return;
-    // serverClientId is read from google-services.json (default_web_client_id).
-    await GoogleSignIn.instance.initialize();
+    await GoogleSignIn.instance.initialize(serverClientId: AppConfig.googleWebClientId);
     _initialized = true;
   }
 

@@ -9,7 +9,7 @@ import { updateQueueStats } from "./api";
 export * from "./api";
 export * from "./admin";
 
-const sched = { region: REGION, timeZone: "UTC", timeoutSeconds: 540, memory: "512MiB" as const };
+const sched = { region: REGION, timeZone: "UTC", timeoutSeconds: 540, memory: "512MiB" as const, maxInstances: 1 };
 
 async function forEachGroup(statuses: string[], fn: (id: string) => Promise<void>): Promise<void> {
   const snap = await db.collection("groups").where("status", "in", statuses).get();

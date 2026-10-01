@@ -7,6 +7,10 @@ class AppConfig {
   static const supportEmail = 'vlathiya5944@gmail.com';
   static const packageName = 'com.vlathiya.testpact';
 
+  /// OAuth "Web client" ID from Firebase Auth → Google provider. Google Sign-In needs it to issue
+  /// an ID token that Firebase accepts.
+  static const googleWebClientId = '999364978128-sbudg5n4sd278bt0kl9f5nr3p603se6d.apps.googleusercontent.com';
+
   static const groupSize = 20;
   static const minToStart = 14;
   static const testDays = 16;

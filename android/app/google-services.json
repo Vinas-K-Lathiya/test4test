@@ -12,7 +12,20 @@
           "package_name": "com.vlathiya.testpact"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "999364978128-n2e6pcvgnjs8etemchm40tr768i7p2v8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vlathiya.testpact",
+            "certificate_hash": "d9d9af52a0644f5919de57b496dd2eb62b95cea0"
+          }
+        },
+        {
+          "client_id": "999364978128-sbudg5n4sd278bt0kl9f5nr3p603se6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD-ErDZT83kmlnb_jT7cnprcdGOMbaMOB4"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999364978128-sbudg5n4sd278bt0kl9f5nr3p603se6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

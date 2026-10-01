@@ -1,9 +1,14 @@
 import { initializeApp, getApps } from "firebase-admin/app";
 import { getFirestore, FieldValue, Timestamp } from "firebase-admin/firestore";
+import { setGlobalOptions } from "firebase-functions/v2";
 import { HttpsError, CallableRequest } from "firebase-functions/v2/https";
 import { ADMIN_EMAILS, FORM_EARLY_AFTER_HOURS } from "./config";
 
 if (getApps().length === 0) initializeApp();
+
+// New projects have a small per-region CPU quota. Fractional CPU + a low instance cap keeps all
+// ~23 functions inside it and keeps costs tiny. Raise maxInstances as the user base grows.
+setGlobalOptions({ maxInstances: 5, cpu: "gcf_gen1", memory: "256MiB", concurrency: 1 });
 
 export const db = getFirestore();
 export { FieldValue, Timestamp };
