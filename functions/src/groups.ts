@@ -244,7 +244,7 @@ export async function refreshReadiness(groupId: string): Promise<void> {
   const nowActive: Member[] = [];
 
   await Promise.all(
-    members.filter((m) => m.state === "setup").map(async (m) => {
+    members.filter((m) => m.state === "setup" && !m.bot).map(async (m) => {
       const act = await loadActivity(groupId, m.uid, today);
       const vis = visibleApps(members, m.uid);
       const installedAll = vis.every((v) => act[v.uid]?.installed === true);
@@ -435,15 +435,20 @@ export function evaluateMemberDay(
 }
 
 /** Evaluates `day` for every active member, applies trust, warnings and auto-kicks. */
-export async function evaluateGroupDay(groupId: string, day: string): Promise<void> {
+export async function evaluateGroupDay(
+  groupId: string,
+  day: string,
+  opts: { force?: boolean; emptyFor?: string } = {},
+): Promise<void> {
   const g = await loadGroup(groupId);
   if (!g || g.status !== "active") return;
-  if (g.lastEvaluatedDay && g.lastEvaluatedDay >= day) return; // idempotent
+  if (!opts.force && g.lastEvaluatedDay && g.lastEvaluatedDay >= day) return; // idempotent
   const members = await loadMembers(groupId);
 
   for (const m of members) {
-    if (m.state !== "active" || !m.activeSince || m.activeSince >= day) continue; // first partial day is free
-    const act = await loadActivity(groupId, m.uid, day);
+    if (m.bot || m.state !== "active" || !m.activeSince || m.activeSince >= day) continue; // first partial day is free
+    // Test mode can simulate a missed day by ignoring the member's real activity.
+    const act = opts.emptyFor === m.uid ? {} : await loadActivity(groupId, m.uid, day);
     const r = evaluateMemberDay(members, m, day, act);
     const lastDays = [...(m.lastDays ?? []), r].slice(-7);
     if (r.ok) {
@@ -502,7 +507,7 @@ export async function hourlyTick(groupId: string): Promise<void> {
   // Reminder ~12h before a member's setup deadline.
   for (const m of members) {
     const deadline = m.late ? m.setupDeadline : g.setupDeadline;
-    if (m.state !== "setup" || m.ready || m.reminded) continue;
+    if (m.bot || m.state !== "setup" || m.ready || m.reminded) continue;
     if (deadline.toMillis() - now < 12 * 3600 * 1000) {
       await memberRef(groupId, m.uid).update({ reminded: true });
       await notify(m.uid, "setupReminder", {}, { groupId });

@@ -80,4 +80,8 @@ class Api {
   Future<void> adjustTrust(String uid, int delta, String reason) =>
       call('adminAdjustTrust', {'uid': uid, 'delta': delta, 'reason': reason});
   Future<Map<String, dynamic>> findUser(String email) => call('adminFindUser', {'email': email});
+
+  /// Admin test harness: action = seed | forceStart | advance | cleanup.
+  Future<Map<String, dynamic>> testTools(String action, {String? groupId, int? days, bool? miss}) =>
+      call('adminTestTools', {'action': action, 'groupId': ?groupId, 'days': ?days, 'miss': ?miss});
 }

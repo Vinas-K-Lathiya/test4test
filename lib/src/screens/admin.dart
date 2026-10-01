@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../l10n.dart';
@@ -19,13 +20,16 @@ class AdminScreen extends ConsumerWidget {
       return Scaffold(appBar: AppBar(), body: Center(child: Text(l.errGeneric)));
     }
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l.admin),
-          bottom: TabBar(tabs: [Tab(text: l.adminReviews), Tab(text: l.adminAppeals), Tab(text: l.adminUsers)]),
+          bottom: TabBar(
+            isScrollable: true,
+            tabs: [Tab(text: l.adminReviews), Tab(text: l.adminAppeals), Tab(text: l.adminUsers), const Tab(text: 'Test')],
+          ),
         ),
-        body: const TabBarView(children: [_Reviews(), _Appeals(), _Users()]),
+        body: const TabBarView(children: [_Reviews(), _Appeals(), _Users(), _TestTools()]),
       ),
     );
   }
@@ -283,6 +287,96 @@ class _UsersState extends ConsumerState<_Users> {
             ]),
           ),
         ),
+    ]);
+  }
+}
+
+/// Admin-only: walk through a whole group alone using stand-in test members.
+class _TestTools extends ConsumerWidget {
+  const _TestTools();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final api = ref.read(apiProvider);
+    final groupId = ref.watch(accountProvider).value?.currentGroupId;
+    final group = groupId == null ? null : ref.watch(groupProvider(groupId)).value;
+    final isTest = group != null && groupId != null;
+
+    Future<void> run(String action, {int? days, bool? miss, String? done}) async {
+      Map<String, dynamic>? r;
+      final ok = await runAction(context, () async {
+        r = await api.testTools(action, groupId: groupId, days: days, miss: miss);
+      });
+      if (!ok || !context.mounted) return;
+      final msg = done ??
+          (r?['status'] != null ? 'Group is now ${r!['status']}, day ${r!['dayIndex']}' : 'Done');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      if (action == 'seed' && r?['groupId'] != null) context.push('/group/${r!['groupId']}');
+    }
+
+    return ListView(padding: const EdgeInsets.all(16), children: [
+      const InfoCard(
+        icon: Icons.science_rounded,
+        title: 'Test the full flow alone',
+        body: 'Creates a group with you + 13 test members whose "apps" are Google apps already on most phones '
+            '(YouTube, Chrome, Gmail, Maps…). Install checks and usage tracking work for real. '
+            'Your real trust score and stats are restored when you delete the test group.',
+      ),
+      const SizedBox(height: 16),
+      if (groupId == null) ...[
+        const Text('Step 1: you need one app in "My apps". Then:'),
+        const SizedBox(height: 8),
+        FilledButton.icon(
+          icon: const Icon(Icons.group_add_rounded),
+          label: const Text('Create test group'),
+          onPressed: () => run('seed', done: 'Test group created'),
+        ),
+      ] else ...[
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.groups_rounded),
+            title: Text('Group #${group?.shortId ?? ''}'),
+            subtitle: Text(group == null
+                ? ''
+                : group.status == GroupStatus.active
+                    ? 'Testing · day ${group.dayIndex} of ${group.testDays}'
+                    : group.status.name),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push('/group/$groupId'),
+          ),
+        ),
+        const SizedBox(height: 12),
+        if (group?.status == GroupStatus.setup) ...[
+          const Text('Do the Setup tab yourself (copy emails → "I added everyone", install apps). '
+              'The test starts automatically when you are ready, or:'),
+          const SizedBox(height: 8),
+          OutlinedButton(onPressed: () => run('forceStart', done: 'Test started'), child: const Text('Skip setup & start now')),
+        ],
+        if (group?.status == GroupStatus.active) ...[
+          const Text('Open some apps from the Today tab, then advance. Each advance scores today\'s activity '
+              'as one day (+1 trust if ≥90% opened, otherwise a warning).'),
+          const SizedBox(height: 8),
+          FilledButton(onPressed: () => run('advance', days: 1), child: const Text('Advance 1 day')),
+          const SizedBox(height: 8),
+          OutlinedButton(
+            onPressed: () => run('advance', days: 1, miss: true),
+            child: const Text('Advance 1 day as a MISSED day (test warnings / kick)'),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton(
+            onPressed: () => run('advance', days: 17),
+            child: const Text('Jump to the end (complete the group)'),
+          ),
+        ],
+        const SizedBox(height: 24),
+        if (isTest)
+          TextButton.icon(
+            style: TextButton.styleFrom(foregroundColor: Brand.red),
+            icon: const Icon(Icons.delete_forever_rounded),
+            label: const Text('Delete test group & restore my profile'),
+            onPressed: () => run('cleanup', done: 'Test group deleted'),
+          ),
+      ],
     ]);
   }
 }

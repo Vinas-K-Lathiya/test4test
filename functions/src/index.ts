@@ -8,6 +8,7 @@ import { updateQueueStats } from "./api";
 
 export * from "./api";
 export * from "./admin";
+export * from "./testtools";
 
 const sched = { region: REGION, timeZone: "UTC", timeoutSeconds: 540, memory: "512MiB" as const, maxInstances: 1 };
 

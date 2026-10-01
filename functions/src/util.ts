@@ -59,6 +59,8 @@ export interface Member {
   today: { day: string; installed: number; opened: number; required: number; usageAccess: boolean } | null;
   removedReason: string | null;
   reminded?: boolean;
+  /** Test-mode stand-in member created by adminTestTools; always "does its part". */
+  bot?: boolean;
 }
 
 export interface Group {
@@ -75,6 +77,8 @@ export interface Group {
   size: number;
   completedAt?: Timestamp;
   lastEvaluatedDay?: string;
+  /** Created by adminTestTools; only the admin is a real member. */
+  test?: boolean;
 }
 
 export interface AppActivity {
