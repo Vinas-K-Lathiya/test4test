@@ -22,6 +22,8 @@ import {
  * already installed on most phones, so install and usage checks work for real.
  */
 
+// First 8: preinstalled on almost every phone (verify install + usage tracking).
+// Last 5: usually NOT installed, so the tester walks through Join test -> Install -> verified.
 const BOT_APPS: [string, string][] = [
   ["YouTube", "com.google.android.youtube"],
   ["Chrome", "com.android.chrome"],
@@ -31,11 +33,11 @@ const BOT_APPS: [string, string][] = [
   ["Google", "com.google.android.googlequicksearchbox"],
   ["Play Store", "com.android.vending"],
   ["Google Drive", "com.google.android.apps.docs"],
-  ["YouTube Music", "com.google.android.apps.youtube.music"],
-  ["Google Meet", "com.google.android.apps.tachyon"],
-  ["Google Calendar", "com.google.android.calendar"],
-  ["Files by Google", "com.google.android.apps.nbu.files"],
-  ["WhatsApp", "com.whatsapp"],
+  ["PhonePe", "com.phonepe.app"],
+  ["Swiggy", "in.swiggy.android"],
+  ["Zomato", "com.application.zomato"],
+  ["Flipkart", "com.flipkart.android"],
+  ["Duolingo", "com.duolingo"],
 ];
 const BOT_NAMES = ["Aarav", "Diya", "Kabir", "Ananya", "Vihaan", "Isha", "Arjun", "Meera", "Rohan", "Sara", "Dev", "Kiara", "Yash"];
 
