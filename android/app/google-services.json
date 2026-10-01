@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "999364978128",
+    "project_id": "testpact-vlathiya",
+    "storage_bucket": "testpact-vlathiya.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999364978128:android:10c388fc5657a6a0c1c5d5",
+        "android_client_info": {
+          "package_name": "com.vlathiya.testpact"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-ErDZT83kmlnb_jT7cnprcdGOMbaMOB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

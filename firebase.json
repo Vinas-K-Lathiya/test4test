@@ -10,13 +10,42 @@
     {
       "source": "functions",
       "codebase": "default",
-      "ignore": ["node_modules", ".git", "*.log", "src/**"],
-      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"]
+      "ignore": [
+        "node_modules",
+        ".git",
+        "*.log",
+        "src/**"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
     }
   ],
   "hosting": {
     "public": "web",
-    "ignore": ["firebase.json", "**/.*"],
+    "ignore": [
+      "firebase.json",
+      "**/.*"
+    ],
     "cleanUrls": true
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "testpact-vlathiya",
+          "appId": "1:999364978128:android:10c388fc5657a6a0c1c5d5",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "testpact-vlathiya",
+          "configurations": {
+            "android": "1:999364978128:android:10c388fc5657a6a0c1c5d5"
+          }
+        }
+      }
+    }
   }
 }

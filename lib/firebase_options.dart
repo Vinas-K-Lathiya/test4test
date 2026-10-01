@@ -15,10 +15,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'REPLACE_ME',
-    appId: '1:000000000000:android:0000000000000000000000',
-    messagingSenderId: '000000000000',
-    projectId: 'testpact-app',
-    storageBucket: 'testpact-app.firebasestorage.app',
+    apiKey: 'AIzaSyD-ErDZT83kmlnb_jT7cnprcdGOMbaMOB4',
+    appId: '1:999364978128:android:10c388fc5657a6a0c1c5d5',
+    messagingSenderId: '999364978128',
+    projectId: 'testpact-vlathiya',
+    storageBucket: 'testpact-vlathiya.firebasestorage.app',
   );
 }
