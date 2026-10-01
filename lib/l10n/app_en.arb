@@ -1,0 +1,637 @@
+{
+  "@@locale": "en",
+  "cancel": "Cancel",
+  "save": "Save",
+  "saved": "Saved",
+  "delete": "Delete",
+  "edit": "Edit",
+  "next": "Next",
+  "retry": "Retry",
+  "yes": "Yes",
+  "no": "No",
+  "you": "you",
+  "required": "Required",
+  "open": "Open",
+  "install": "Install",
+  "leave": "Leave",
+  "accept": "Accept",
+  "reject": "Reject",
+  "confirmAction": "Confirm",
+  "errDeviceInUse": "This phone is already linked to another TestPact account. One account per device keeps groups fair.",
+  "errBanned": "Your account can't join new groups right now. You can send an appeal.",
+  "errAlreadyInGroup": "You're already in a group. Finish it first.",
+  "errAppNotFound": "That app listing no longer exists.",
+  "errAppealOpen": "You already have an appeal waiting for review.",
+  "errAlreadyRated": "You already rated this feedback.",
+  "errIntegrity": "This device didn't pass Google Play's integrity check. Use a genuine phone with the app installed from Google Play.",
+  "errNetwork": "No connection. Check your internet and try again.",
+  "errGeneric": "Something went wrong. Please try again.",
+  "levelProbation": "Probation",
+  "levelNewcomer": "Newcomer",
+  "levelMember": "Member",
+  "levelTrusted": "Trusted",
+  "levelTopTester": "Top Tester",
+  "reasonNotInstalled": "Didn't install my app",
+  "reasonUninstalled": "Uninstalled during the test",
+  "reasonNotOpening": "Not opening apps daily",
+  "reasonEmailNotAdded": "Didn't add my email to their test",
+  "reasonSpam": "Spam or abuse",
+  "reasonFakeFeedback": "Fake or copy-paste feedback",
+  "reasonOther": "Other",
+  "catBug": "Bug",
+  "catUx": "Design / UX",
+  "catIdea": "Idea",
+  "catPraise": "Praise",
+  "catOther": "Other",
+  "badgeFirstPact": "First pact",
+  "badgeVeteran": "Veteran (5 groups)",
+  "badgePerfect": "Perfect streak",
+  "badgeHelpful": "Helpful reviewer",
+  "badgeTopTester": "Top tester",
+  "removedSetup": "setup not finished in time",
+  "removedInactive": "inactive for 3 days",
+  "removedReported": "reports confirmed by admin",
+  "removedLeft": "left the group",
+  "removedCancelled": "group cancelled",
+  "removedEnded": "group ended",
+  "removedOther": "removed",
+  "trustAdmin": "Admin adjustment: {reason}",
+  "@trustAdmin": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "trustGroupCompleted": "Completed a group",
+  "trustActiveDay": "Opened all apps for the day",
+  "trustMissedDay": "Missed a day",
+  "trustHelpfulFeedback": "Feedback marked helpful",
+  "trustKickedInactive": "Removed for inactivity",
+  "trustKickedReported": "Removed after confirmed reports",
+  "trustSetupFailed": "Setup not finished",
+  "trustLeftGroup": "Left a group early",
+  "trustFalseReport": "Report rejected by admin",
+  "trustAppealAccepted": "Appeal accepted",
+  "statusSetup": "Setup",
+  "statusActive": "Testing",
+  "statusCompleted": "Completed",
+  "statusCancelled": "Cancelled",
+  "stateSetup": "Setting up",
+  "stateActive": "Testing",
+  "stateSuspended": "Under review",
+  "stateRemoved": "Removed",
+  "stateCompleted": "Completed",
+  "language": "Language",
+  "tagline": "Real testers. Real feedback.\nPass Google Play closed testing together.",
+  "signInBullet1": "Get matched into a group of up to 20 Android developers",
+  "signInBullet2": "Installs and daily usage are verified on-device",
+  "signInBullet3": "Give and receive honest feedback that improves your app",
+  "continueWithGoogle": "Continue with Google",
+  "privacyPolicy": "Privacy policy",
+  "terms": "Terms",
+  "ob1Title": "A pact between developers",
+  "ob1P1": "Google needs 12 testers opted in for 14 days before a new personal account can go to production.",
+  "ob1P2": "You join a group. Everyone adds everyone as testers and installs everyone's app.",
+  "ob1P3": "For 16 days, you open each app in your list every day. Your app gets the same from everyone else.",
+  "ob2Title": "Fair for everyone",
+  "ob2P1": "Your app is only shown to others after you've added their emails: give first, then receive.",
+  "ob2P2": "Your trust score grows when you test daily and give helpful feedback, and drops when you don't.",
+  "ob2P3": "Inactive members get warnings and are removed after 3 missed days. Reports are checked against real usage data.",
+  "ob3Title": "Prove your testing automatically",
+  "ob3P1": "TestPact checks only the apps assigned to you: installed or not, and minutes used today.",
+  "ob3P2": "Nothing about your other apps is ever read or sent.",
+  "usageAccessTitle": "Usage access",
+  "usageAccessBody": "Lets TestPact count the minutes you spend in your assigned apps, so you get credit even when you open them from your home screen.",
+  "granted": "Granted ✓",
+  "notGranted": "Not granted, tap to enable",
+  "grantUsageAccess": "Grant usage access",
+  "notificationsTitle": "Reminders",
+  "notificationsBody": "Daily reminders and group updates, so you never miss a day.",
+  "allowNotifications": "Allow notifications",
+  "getStarted": "Get started",
+  "settingUp": "Setting up your account…",
+  "signOut": "Sign out",
+  "tabHome": "Home",
+  "tabMyApps": "My apps",
+  "tabFeedback": "Feedback",
+  "tabProfile": "Profile",
+  "admin": "Admin",
+  "settings": "Settings",
+  "addApp": "Add app",
+  "bannedTitle": "Account restricted",
+  "bannedBody": "You have {count} strikes, so you can't join new groups. If you think this is a mistake, send an appeal.",
+  "@bannedBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "appeal": "Appeal",
+  "strikesTitle": "{count, plural, =1{1 strike} other{{count} strikes}} on your account",
+  "@strikesTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "strikesBody": "3 strikes and you can't join new groups. Strikes come from removals for inactivity or confirmed reports.",
+  "howItWorks": "How it works",
+  "googleRuleTitle": "Google Play's rule",
+  "googleRuleBody": "Personal developer accounts created after 13 Nov 2023 need at least 12 testers opted in for 14 days in a row. Groups start with 20 people and run 16 days, so you have a buffer. Google also checks that testers really used the app, so open it and explore, don't just install it.",
+  "hello": "Hi, {name} 👋",
+  "@hello": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "joinCardTitle": "Ready to find your testers?",
+  "joinCardBody": "Join the queue. As soon as there are enough developers, your group is created automatically.",
+  "joinCardNoApps": "Add the app you want tested first, including its closed testing link.",
+  "joinGroup": "Join a group",
+  "addYourApp": "Add your app",
+  "inQueueTitle": "You're in the queue",
+  "inQueueBody": "Waiting to match {app} into a {tier} group. We'll notify you when it's ready.",
+  "@inQueueBody": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      },
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "tierTrusted": "trusted",
+  "tierStarter": "starter",
+  "queueWaiting": "{count} of {size} developers waiting",
+  "@queueWaiting": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "queueJoinedAt": "Joined {time}",
+  "@queueJoinedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "leaveQueue": "Leave queue",
+  "dayOf": "Day {day} of {total}",
+  "@dayOf": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "groupTitle": "Group #{id}",
+  "@groupTitle": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "openedToday": "Opened today: {opened} of {total}",
+  "@openedToday": {
+    "placeholders": {
+      "opened": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "setupDoneWaiting": "Setup done ✓ Waiting for the others to finish.",
+  "setupTodo": "Finish setup: add the emails and install everyone's app.",
+  "suspendedBody": "You're under review after several reports. An admin is checking your activity data.",
+  "openGroup": "Open group",
+  "step1Title": "Add your app",
+  "step1Body": "Name, package and your closed testing opt-in link.",
+  "step2Title": "Join the queue",
+  "step2Body": "Groups of 20 form automatically. Trusted testers are matched together.",
+  "step3Title": "Setup within 48h",
+  "step3Body": "Paste everyone's email into Play Console, then join and install every app.",
+  "step4Title": "Test daily for 16 days",
+  "step4Body": "Open each app every day and leave real feedback. We verify it on-device.",
+  "step5Title": "Apply for production",
+  "step5Body": "Earn trust points and badges, then apply for production in Play Console.",
+  "rule1": "I will add every member's email to my closed test within 48 hours.",
+  "rule2": "I will install every member's app and keep it installed until the end.",
+  "rule3": "I will open every app daily for 16 days and give honest feedback.",
+  "rule4": "I understand inactive members are removed and lose trust points.",
+  "chooseApp": "Which app should be tested?",
+  "yourCommitment": "Your commitment",
+  "joinedQueue": "You're in the queue!",
+  "joinQueue": "Join queue",
+  "noAppsTitle": "No apps yet",
+  "noAppsBody": "Add the app you want tested. You'll need its closed testing opt-in link from Play Console.",
+  "deleteAppTitle": "Delete this app?",
+  "deleteAppBody": "Groups that already include it keep their copy. You can add it again later.",
+  "editApp": "Edit app",
+  "appIcon": "Tap to set icon",
+  "appName": "App name",
+  "packageName": "Package name",
+  "invalidPackage": "Enter a valid package name, e.g. com.example.app",
+  "optInLink": "Closed testing opt-in link",
+  "optInHelp": "Play Console → Testing → Closed testing → Testers → \"Join on the web\" link.",
+  "invalidOptIn": "Must be a play.google.com/apps/testing/… link",
+  "shortDescription": "Short description",
+  "testNotes": "What should testers try?",
+  "testNotesHelp": "e.g. \"Create an account and add 2 items to the cart\". Shown to testers every day.",
+  "closedTestTipTitle": "Before you join",
+  "closedTestTipBody": "Create a closed testing track, upload a build, roll it out, and set the tester list to an email list. Your group's emails go there.",
+  "tabToday": "Today",
+  "tabSetup": "Setup",
+  "tabMembers": "Members",
+  "tabActivity": "Activity",
+  "leaveGroup": "Leave group",
+  "leaveGroupTitle": "Leave this group?",
+  "leaveGroupBody": "The others stop testing your app and you lose trust points. This can't be undone.",
+  "youWereRemoved": "You were removed: {reason}.",
+  "@youWereRemoved": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "youCompleted": "You completed this group 🏆 You can now apply for production access in Play Console.",
+  "setupDeadlinePassed": "Setup deadline passed. Processing…",
+  "setupTimeLeft": "{hours}h {minutes}m left to finish setup",
+  "@setupTimeLeft": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "setupExplain": "Members who don't finish are replaced from the queue. The test starts when everyone is ready.",
+  "step1AddEmails": "Step 1 · Add testers to your closed test",
+  "addEmailsBody": "Copy all {count} emails and paste them into your closed testing email list in Play Console.",
+  "@addEmailsBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "copyAllEmails": "Copy all emails",
+  "copied": "{count} emails copied",
+  "@copied": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "emailsConfirmed": "Emails added",
+  "iAddedEveryone": "I added everyone",
+  "confirmEmailsTitle": "Did you add all the emails?",
+  "confirmEmailsBody": "Confirm that all {count} emails are on your closed test's tester list and the change is saved. Members can report you if they can't join.",
+  "@confirmEmailsBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "yesAdded": "Yes, all added",
+  "emailsHowTo": "Play Console → your app → Testing → Closed testing → Testers → Email list → paste → Save.",
+  "step2InstallApps": "Step 2 · Join & install apps ({done}/{total})",
+  "@step2InstallApps": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "checkAgain": "Check again",
+  "waitingForOwners": "{count, plural, =1{1 member hasn't} other{{count} members haven't}} added the group's emails yet. Their apps appear here once they do.",
+  "@waitingForOwners": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noAppsYet": "No apps to install yet.",
+  "byName": "by {name}",
+  "@byName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "joinTest": "Join test",
+  "newMembersTitle": "New member joined",
+  "newMembersBody": "Add the new email(s) to your closed test and install their app. Open the Setup tab.",
+  "usageAccessOffTitle": "Usage access is off",
+  "usageAccessOffBody": "Only apps you open with the Open button count. Turn on usage access to also get credit when you open them from your home screen.",
+  "yourTestList": "Your test list",
+  "todayTitle": "Today's testing",
+  "todayDone": "All done for today 🎉",
+  "todayDoneBody": "Great job. Come back tomorrow.",
+  "todayBody": "Open at least {needed} apps and use each for a bit.",
+  "@todayBody": {
+    "placeholders": {
+      "needed": {
+        "type": "int"
+      }
+    }
+  },
+  "dayResetsAt": "New day starts at {time}",
+  "@dayResetsAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "notInstalled": "Not installed",
+  "openedMinutes": "Opened today · {minutes} min",
+  "@openedMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notOpenedYet": "Not opened today",
+  "feedbackGivenCount": "Feedback ({count})",
+  "@feedbackGivenCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "giveFeedback": "Feedback",
+  "statMembers": "Members",
+  "statOnTrack": "On track today",
+  "statRemoved": "Removed",
+  "membersLegend": "🟢 on track  🟡 not done yet  🔴 missed days  ⚪ left",
+  "memberSetupLine": "emails {emails} · installed {installed}/{total}",
+  "@memberSetupLine": {
+    "placeholders": {
+      "emails": {
+        "type": "String"
+      },
+      "installed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "memberActiveLine": "installed {installed}/{total} · opened {opened}/{total} · feedback {feedback}",
+  "@memberActiveLine": {
+    "placeholders": {
+      "installed": {
+        "type": "int"
+      },
+      "opened": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "feedback": {
+        "type": "int"
+      }
+    }
+  },
+  "missedInARow": "Missed {count} day(s) in a row",
+  "@missedInARow": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lastDays": "Last days",
+  "viewProfile": "View profile",
+  "openInPlay": "Open in Play Store",
+  "reportMember": "Report",
+  "reportSent": "Report sent. Thanks for keeping groups fair.",
+  "reportTitle": "Report {name}",
+  "@reportTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportExplain": "Action is only taken when several members report AND our usage data agrees. False reports cost trust points.",
+  "detailsOptional": "Details (optional)",
+  "addScreenshot": "Add screenshot",
+  "screenshotAdded": "Screenshot added ✓",
+  "sendReport": "Send report",
+  "noActivity": "No activity yet",
+  "evFormed": "Group formed with {count} developers",
+  "@evFormed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "evJoined": "{name} joined the group",
+  "@evJoined": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "evEmailsAdded": "{name} added everyone's email",
+  "@evEmailsAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "evStarted": "Testing started: day 1",
+  "evMemberActive": "{name} finished setup and started testing",
+  "@evMemberActive": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "evWarning": "{name} missed 2 days in a row (final warning)",
+  "@evWarning": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "evRemoved": "{name} was removed ({reason})",
+  "@evRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "evSuspended": "{name} is under admin review",
+  "@evSuspended": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "evReinstated": "{name} was cleared and is back",
+  "@evReinstated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "evCompleted": "Group completed 🏆",
+  "evCancelled": "Group cancelled",
+  "feedbackSent": "Feedback sent. Thank you!",
+  "feedbackFor": "Feedback: {app}",
+  "@feedbackFor": {
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "developerAsks": "The developer asks you to try",
+  "rating": "Rating",
+  "category": "Category",
+  "yourFeedback": "Your feedback",
+  "feedbackHint": "What worked, what broke, what confused you? Be specific: screens, steps, device.",
+  "feedbackMin": "At least 20 characters",
+  "sendFeedback": "Send feedback",
+  "received": "Received",
+  "given": "Given",
+  "noFeedbackReceived": "No feedback yet",
+  "noFeedbackReceivedBody": "Feedback from your group's testers will show up here.",
+  "noFeedbackGiven": "You haven't given feedback yet",
+  "noFeedbackGivenBody": "Use the Feedback button on each app in your group's Today tab.",
+  "fromOnApp": "{name} on {app}",
+  "@fromOnApp": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "wasHelpful": "Was this helpful?",
+  "markedHelpful": "You marked this helpful (+2 trust for them)",
+  "markedNotHelpful": "Marked not helpful",
+  "groupHistory": "Groups",
+  "noGroupsYet": "No groups yet.",
+  "trustHistory": "Trust score history",
+  "noTrustHistory": "No changes yet.",
+  "trustScore": "Trust score",
+  "pointsToNext": "{points} points to the next level",
+  "@pointsToNext": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "statCompleted": "Groups completed",
+  "statCompletionRate": "Completion rate",
+  "statDailyActivity": "Daily activity",
+  "statActiveDays": "Active days",
+  "statFeedback": "Feedback given",
+  "statHelpful": "Helpful feedback",
+  "badges": "Badges",
+  "noBadges": "Complete your first group to earn a badge.",
+  "systemLanguage": "System default",
+  "general": "General",
+  "about": "About",
+  "contactSupport": "Contact support",
+  "rateApp": "Rate TestPact",
+  "account": "Account",
+  "deleteAccount": "Delete account",
+  "deleteAccountTitle": "Delete your account?",
+  "deleteAccountBody": "Your profile, apps and trust score are deleted permanently. If you're in a group you'll be removed from it.",
+  "appealTitle": "Appeal a decision",
+  "appealExplain": "Explain what happened. An admin reviews every appeal. Accepted appeals remove a strike and restore some trust points.",
+  "appealHint": "What happened? Include dates and anything that helps us check.",
+  "appealSent": "Appeal sent",
+  "sendAppeal": "Send appeal",
+  "yourAppeals": "Your appeals",
+  "appealOpen": "Waiting for review",
+  "appealAccepted": "Accepted",
+  "appealRejected": "Rejected",
+  "adminReviews": "Reviews",
+  "adminAppeals": "Appeals",
+  "adminUsers": "Users",
+  "noteOptional": "Note to the user (optional)",
+  "nothingToReview": "Nothing to review 🎉",
+  "dataSummary": "Usage data: {active} active days, {missed} missed days",
+  "@dataSummary": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "missed": {
+        "type": "int"
+      }
+    }
+  },
+  "rejectReports": "Reject reports",
+  "confirmKick": "Confirm & remove",
+  "searchByEmail": "Search user by email",
+  "userNotFound": "No user with that email.",
+  "userSummary": "Trust {trust} · strikes {strikes} · banned: {banned}",
+  "@userSummary": {
+    "placeholders": {
+      "trust": {
+        "type": "int"
+      },
+      "strikes": {
+        "type": "int"
+      },
+      "banned": {
+        "type": "String"
+      }
+    }
+  },
+  "ban": "Ban",
+  "unban": "Unban",
+  "adjustTrust": "Adjust trust score"
+}

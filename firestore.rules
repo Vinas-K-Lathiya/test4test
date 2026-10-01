@@ -1,0 +1,101 @@
+rules_version = '2';
+
+// All trust, group, report and queue state is written ONLY by Cloud Functions (Admin SDK bypasses rules).
+// Clients may write: their own app listings and a few personal settings on their user doc.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['vlathiya5944@gmail.com'];
+    }
+    function inGroup(groupId) {
+      return signedIn()
+        && request.auth.uid in get(/databases/$(database)/documents/groups/$(groupId)).data.memberUids;
+    }
+    function onlyChanged(keys) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys);
+    }
+
+    // Private account data (email, strikes, device, current group).
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow update: if signedIn() && request.auth.uid == uid
+        && onlyChanged(['locale', 'fcmToken', 'notifications'])
+        && (!('locale' in request.resource.data) || request.resource.data.locale is string);
+    }
+
+    // Public profile: name, photo, trust score, stats, badges.
+    match /profiles/{uid} {
+      allow read: if signedIn();
+      match /trustLog/{entry} {
+        allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      }
+    }
+
+    // App listings. Group members get a frozen copy, so editing/deleting here never breaks a running test.
+    match /apps/{appId} {
+      function validApp(d) {
+        return d.ownerUid == request.auth.uid
+          && d.name is string && d.name.size() >= 2 && d.name.size() <= 50
+          && d.packageName is string && d.packageName.matches('^[a-zA-Z][a-zA-Z0-9_]*(\\.[a-zA-Z][a-zA-Z0-9_]*)+$')
+          && d.optInWebUrl is string && d.optInWebUrl.matches('^https://play\\.google\\.com/apps/(internaltest|testing)/.+')
+          && d.optInPlayUrl is string && d.optInPlayUrl.matches('^https://play\\.google\\.com/store/apps/details\\?id=.+')
+          && d.description is string && d.description.size() <= 300
+          && d.testNotes is string && d.testNotes.size() <= 1000
+          && (!('iconUrl' in d) || d.iconUrl == null || d.iconUrl is string);
+      }
+      allow read: if signedIn();
+      allow create: if signedIn() && validApp(request.resource.data);
+      allow update: if signedIn() && resource.data.ownerUid == request.auth.uid && validApp(request.resource.data);
+      allow delete: if signedIn() && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /queue/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+    }
+
+    match /stats/{doc} {
+      allow read: if signedIn();
+    }
+
+    match /config/{doc} {
+      allow read: if true;
+    }
+
+    match /groups/{groupId} {
+      // Checked on the doc itself so "groups where memberUids array-contains me" list queries are allowed.
+      allow read: if signedIn() && (request.auth.uid in resource.data.memberUids || isAdmin());
+      match /members/{uid} {
+        allow read: if inGroup(groupId) || isAdmin();
+      }
+      match /events/{eventId} {
+        allow read: if inGroup(groupId) || isAdmin();
+      }
+      match /activity/{docId} {
+        allow read: if inGroup(groupId) || isAdmin();
+      }
+    }
+
+    match /feedback/{id} {
+      allow read: if signedIn()
+        && (resource.data.fromUid == request.auth.uid || resource.data.toUid == request.auth.uid || isAdmin());
+    }
+
+    match /reports/{id} {
+      allow read: if signedIn() && (resource.data.reporterUid == request.auth.uid || isAdmin());
+    }
+
+    match /reviews/{id} {
+      allow read: if isAdmin();
+    }
+
+    match /appeals/{id} {
+      allow read: if signedIn() && (resource.data.uid == request.auth.uid || isAdmin());
+    }
+
+    // devices, nonces: server only.
+  }
+}

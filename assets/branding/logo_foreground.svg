@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+    <circle cx="512.00" cy="282.00" r="24" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="627.00" cy="312.81" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="711.19" cy="397.00" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="742.00" cy="512.00" r="24" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="711.19" cy="627.00" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="627.00" cy="711.19" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="512.00" cy="742.00" r="24" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="397.00" cy="711.19" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="312.81" cy="627.00" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="282.00" cy="512.00" r="24" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="312.81" cy="397.00" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="397.00" cy="312.81" r="24" fill="#FFFFFF" fill-opacity="0.55"/>
+  <path d="M414 516 L481 583 L616 440" fill="none" stroke="#FFFFFF" stroke-width="52" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <circle cx="512" cy="512" r="512" fill="url(#g)"/>
+    <circle cx="512.00" cy="182.00" r="34" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="677.00" cy="226.21" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="797.79" cy="347.00" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="842.00" cy="512.00" r="34" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="797.79" cy="677.00" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="677.00" cy="797.79" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="512.00" cy="842.00" r="34" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="347.00" cy="797.79" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="226.21" cy="677.00" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="182.00" cy="512.00" r="34" fill="#FFFFFF" fill-opacity="1.00"/>
+    <circle cx="226.21" cy="347.00" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+    <circle cx="347.00" cy="226.21" r="34" fill="#FFFFFF" fill-opacity="0.55"/>
+  <path d="M372 520 L468 616 L660 412" fill="none" stroke="#FFFFFF" stroke-width="72" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
