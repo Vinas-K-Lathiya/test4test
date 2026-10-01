@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../app.dart';
 import '../l10n.dart';
 import '../providers.dart';
 import '../router.dart';
@@ -35,11 +34,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   }
 
   void _startMessaging() {
-    ref.read(messagingProvider).start(
-          onOpenGroup: (id) => ref.read(routerProvider).push('/group/$id'),
-          onForeground: (title, body) => scaffoldMessengerKey.currentState
-              ?.showSnackBar(SnackBar(content: Text(body.isEmpty ? title : '$title\n$body'))),
-        );
+    ref.read(messagingProvider).start(onOpenGroup: (id) => ref.read(routerProvider).push('/group/$id'));
   }
 
   @override
@@ -76,11 +71,21 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     _startMessaging();
 
     final isAdmin = ref.watch(isAdminProvider);
+    final unread = ref.watch(unreadCountProvider);
     final titles = [l.tabHome, l.tabMyApps, l.tabFeedback, l.tabProfile];
     return Scaffold(
       appBar: AppBar(
         title: Text(_tab == 0 ? 'TestPact' : titles[_tab]),
         actions: [
+          IconButton(
+            tooltip: l.notificationsInbox,
+            onPressed: () => context.push('/notifications'),
+            icon: Badge(
+              isLabelVisible: unread > 0,
+              label: Text(unread > 99 ? '99+' : '$unread'),
+              child: const Icon(Icons.notifications_rounded),
+            ),
+          ),
           if (isAdmin)
             IconButton(
               tooltip: l.admin,

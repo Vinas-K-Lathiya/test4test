@@ -105,6 +105,28 @@ final trustLogProvider = StreamProvider<List<TrustLogEntry>>((ref) {
       .map((s) => s.docs.map(TrustLogEntry.fromDoc).toList());
 });
 
+// ---- Notifications ----------------------------------------------------------
+
+final inboxProvider = StreamProvider<List<InboxItem>>((ref) {
+  final uid = ref.watch(uidProvider);
+  if (uid == null) return Stream.value(const []);
+  return _db
+      .collection('users')
+      .doc(uid)
+      .collection('inbox')
+      .orderBy('at', descending: true)
+      .limit(100)
+      .snapshots()
+      .map((s) => s.docs.map(InboxItem.fromDoc).toList());
+});
+
+final unreadCountProvider = Provider<int>(
+  (ref) => (ref.watch(inboxProvider).value ?? const []).where((i) => !i.read).length,
+);
+
+/// OS-level notification permission; invalidate to re-check after returning from settings.
+final notificationPermissionProvider = FutureProvider<bool>((ref) => MessagingService.permissionGranted());
+
 // ---- Apps & queue -----------------------------------------------------------
 
 final myAppsProvider = StreamProvider<List<AppListing>>((ref) {

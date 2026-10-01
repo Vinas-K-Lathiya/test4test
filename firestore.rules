@@ -24,7 +24,15 @@ service cloud.firestore {
       allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
       allow update: if signedIn() && request.auth.uid == uid
         && onlyChanged(['locale', 'fcmToken', 'notifications'])
-        && (!('locale' in request.resource.data) || request.resource.data.locale is string);
+        && (!('locale' in request.resource.data) || request.resource.data.locale is string)
+        && (!('notifications' in request.resource.data) || request.resource.data.notifications is map);
+
+      // In-app notification inbox, written by Cloud Functions.
+      match /inbox/{id} {
+        allow read, delete: if signedIn() && request.auth.uid == uid;
+        allow update: if signedIn() && request.auth.uid == uid
+          && onlyChanged(['read']) && request.resource.data.read is bool;
+      }
     }
 
     // Public profile: name, photo, trust score, stats, badges.

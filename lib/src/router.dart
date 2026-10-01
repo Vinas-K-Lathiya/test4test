@@ -10,10 +10,13 @@ import 'screens/feedback/feedback_form.dart';
 import 'screens/group/group_screen.dart';
 import 'screens/home_shell.dart';
 import 'screens/join_queue.dart';
+import 'screens/notifications.dart';
 import 'screens/onboarding.dart';
 import 'screens/profile.dart';
 import 'screens/settings.dart';
 import 'screens/sign_in.dart';
+
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 /// Bridges Riverpod state changes into GoRouter redirects.
 class _RouterRefresh extends ChangeNotifier {
@@ -25,6 +28,7 @@ class _RouterRefresh extends ChangeNotifier {
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: '/',
     refreshListenable: _RouterRefresh(ref),
     redirect: (context, state) {
@@ -53,6 +57,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
       GoRoute(path: '/appeal', builder: (_, _) => const AppealScreen()),
       GoRoute(path: '/admin', builder: (_, _) => const AdminScreen()),
+      GoRoute(path: '/notifications', builder: (_, _) => const NotificationsScreen()),
     ],
   );
 });

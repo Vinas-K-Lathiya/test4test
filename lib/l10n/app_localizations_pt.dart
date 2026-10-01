@@ -1093,4 +1093,96 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get adjustTrust => 'Ajustar confiança';
+
+  @override
+  String get notificationsInbox => 'Notificações';
+
+  @override
+  String get markAllRead => 'Marcar tudo como lido';
+
+  @override
+  String get noNotifications => 'Nenhuma notificação ainda';
+
+  @override
+  String get noNotificationsBody =>
+      'Novidades do grupo, lembretes, avisos e alertas de feedback aparecem aqui.';
+
+  @override
+  String get notificationSettings => 'Notificações';
+
+  @override
+  String get notifPermissionOff =>
+      'As notificações do TestPact estão desativadas';
+
+  @override
+  String get openSettings => 'Abrir configurações';
+
+  @override
+  String get notifDaily => 'Lembretes diários';
+
+  @override
+  String get notifDailySub =>
+      'Lembrete à noite se os apps de hoje ainda não foram abertos, e prazos de configuração';
+
+  @override
+  String get notifGroup => 'Novidades do grupo';
+
+  @override
+  String get notifGroupSub =>
+      'Grupo formado, teste iniciado, novos membros, conclusão';
+
+  @override
+  String get notifFeedback => 'Feedback';
+
+  @override
+  String get notifFeedbackSub => 'Quando alguém deixa feedback no seu app';
+
+  @override
+  String get notifImportantNote =>
+      'Avisos e remoções são sempre enviados, para você não perder nada que afete sua vaga.';
+
+  @override
+  String get noInternetTitle => 'Sem conexão com a internet';
+
+  @override
+  String get noInternetBody =>
+      'Verifique seu Wi-Fi ou dados móveis. O TestPact reconecta automaticamente assim que você voltar a ficar online.';
+
+  @override
+  String get checkingConnection => 'Verificando…';
+
+  @override
+  String get backOnline => 'Online novamente';
+
+  @override
+  String get updateRequiredTitle => 'Atualização necessária';
+
+  @override
+  String get updateRequiredBody =>
+      'Esta versão do TestPact não é mais suportada. Atualize para continuar testando com seu grupo.';
+
+  @override
+  String get updateAvailableTitle => 'Atualização disponível';
+
+  @override
+  String get updateAvailableBody =>
+      'Uma nova versão do TestPact está pronta, com melhorias e correções.';
+
+  @override
+  String get updateNow => 'Atualizar agora';
+
+  @override
+  String get later => 'Mais tarde';
+
+  @override
+  String get updateDownloaded =>
+      'Atualização baixada. Reinicie para concluir a instalação.';
+
+  @override
+  String get restart => 'Reiniciar';
+
+  @override
+  String appVersion(String version) {
+    return 'Versão $version';
+  }
 }

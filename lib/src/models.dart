@@ -16,6 +16,7 @@ class UserAccount {
     required this.strikes,
     required this.banned,
     required this.locale,
+    this.notifications = const {},
   });
 
   final String uid;
@@ -24,6 +25,10 @@ class UserAccount {
   final int strikes;
   final bool banned;
   final String? locale;
+
+  /// Per-category push settings: daily, group, feedback. Missing = on.
+  final Map<String, bool> notifications;
+  bool notifyFor(String category) => notifications[category] ?? true;
 
   factory UserAccount.fromDoc(DocumentSnapshot<Json> d) {
     final j = d.data() ?? {};
@@ -34,6 +39,45 @@ class UserAccount {
       strikes: _int(j['strikes']),
       banned: j['banned'] == true,
       locale: j['locale'] as String?,
+      notifications: {
+        for (final e in ((j['notifications'] as Map?) ?? {}).entries) e.key as String: e.value == true,
+      },
+    );
+  }
+}
+
+/// users/{uid}/inbox/{id}: in-app copy of every notification.
+class InboxItem {
+  InboxItem({
+    required this.id,
+    required this.key,
+    required this.title,
+    required this.body,
+    required this.data,
+    required this.read,
+    required this.at,
+  });
+
+  final String id;
+  final String key;
+  final String title;
+  final String body;
+  final Map<String, String> data;
+  final bool read;
+  final DateTime? at;
+
+  String? get groupId => data['groupId'];
+
+  factory InboxItem.fromDoc(DocumentSnapshot<Json> d) {
+    final j = d.data() ?? {};
+    return InboxItem(
+      id: d.id,
+      key: j['key'] as String? ?? '',
+      title: j['title'] as String? ?? '',
+      body: j['body'] as String? ?? '',
+      data: {for (final e in ((j['data'] as Map?) ?? {}).entries) e.key as String: '${e.value}'},
+      read: j['read'] == true,
+      at: _ts(j['at']),
     );
   }
 }

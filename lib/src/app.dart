@@ -6,6 +6,8 @@ import 'l10n.dart';
 import 'providers.dart';
 import 'router.dart';
 import 'theme.dart';
+import 'widgets/connectivity_gate.dart';
+import 'widgets/update_gate.dart';
 
 final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -30,6 +32,9 @@ class TestPactApp extends ConsumerWidget {
       ],
       scaffoldMessengerKey: scaffoldMessengerKey,
       routerConfig: router,
+      builder: (context, child) => ConnectivityGate(
+        child: UpdateGate(navigatorKey: rootNavigatorKey, child: child ?? const SizedBox.shrink()),
+      ),
     );
   }
 }

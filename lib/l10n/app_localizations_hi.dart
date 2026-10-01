@@ -1078,4 +1078,94 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get adjustTrust => 'ट्रस्ट स्कोर बदलें';
+
+  @override
+  String get notificationsInbox => 'नोटिफिकेशन';
+
+  @override
+  String get markAllRead => 'सभी पढ़े हुए करें';
+
+  @override
+  String get noNotifications => 'अभी कोई नोटिफिकेशन नहीं';
+
+  @override
+  String get noNotificationsBody =>
+      'ग्रुप अपडेट, रिमाइंडर, चेतावनियां और फीडबैक अलर्ट यहां दिखेंगे।';
+
+  @override
+  String get notificationSettings => 'नोटिफिकेशन';
+
+  @override
+  String get notifPermissionOff => 'TestPact के लिए नोटिफिकेशन बंद हैं';
+
+  @override
+  String get openSettings => 'सेटिंग्स खोलें';
+
+  @override
+  String get notifDaily => 'रोज़ के रिमाइंडर';
+
+  @override
+  String get notifDailySub =>
+      'अगर आज के ऐप नहीं खोले तो शाम को रिमाइंडर, और सेटअप की समय-सीमा';
+
+  @override
+  String get notifGroup => 'ग्रुप अपडेट';
+
+  @override
+  String get notifGroupSub => 'ग्रुप बना, टेस्ट शुरू, नए सदस्य, पूरा होना';
+
+  @override
+  String get notifFeedback => 'फीडबैक';
+
+  @override
+  String get notifFeedbackSub => 'जब कोई आपके ऐप पर फीडबैक दे';
+
+  @override
+  String get notifImportantNote =>
+      'चेतावनियां और हटाए जाने की सूचना हमेशा भेजी जाती है, ताकि आपकी जगह से जुड़ी कोई बात न छूटे।';
+
+  @override
+  String get noInternetTitle => 'इंटरनेट कनेक्शन नहीं है';
+
+  @override
+  String get noInternetBody =>
+      'अपना Wi-Fi या मोबाइल डेटा जांचें। ऑनलाइन होते ही TestPact अपने-आप जुड़ जाएगा।';
+
+  @override
+  String get checkingConnection => 'जांच रहे हैं…';
+
+  @override
+  String get backOnline => 'फिर से ऑनलाइन';
+
+  @override
+  String get updateRequiredTitle => 'अपडेट ज़रूरी है';
+
+  @override
+  String get updateRequiredBody =>
+      'TestPact का यह वर्शन अब सपोर्टेड नहीं है। अपने ग्रुप के साथ टेस्टिंग जारी रखने के लिए अपडेट करें।';
+
+  @override
+  String get updateAvailableTitle => 'अपडेट उपलब्ध है';
+
+  @override
+  String get updateAvailableBody =>
+      'TestPact का नया वर्शन सुधारों और फिक्स के साथ तैयार है।';
+
+  @override
+  String get updateNow => 'अभी अपडेट करें';
+
+  @override
+  String get later => 'बाद में';
+
+  @override
+  String get updateDownloaded =>
+      'अपडेट डाउनलोड हो गया। इंस्टॉल पूरा करने के लिए रीस्टार्ट करें।';
+
+  @override
+  String get restart => 'रीस्टार्ट';
+
+  @override
+  String appVersion(String version) {
+    return 'वर्शन $version';
+  }
 }

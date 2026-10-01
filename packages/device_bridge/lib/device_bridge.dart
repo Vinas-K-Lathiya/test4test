@@ -28,6 +28,9 @@ class DeviceBridge {
 
   Future<void> openUsageAccessSettings() => _ch.invokeMethod('openUsageAccessSettings');
 
+  /// Opens Android's notification settings page for this app.
+  Future<void> openNotificationSettings() => _ch.invokeMethod('openNotificationSettings');
+
   Future<Map<String, AppUsage>> usageSince(List<String> packages, DateTime start) async {
     if (packages.isEmpty) return {};
     final r = await _ch.invokeMapMethod<String, dynamic>('usageSince', {

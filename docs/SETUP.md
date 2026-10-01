@@ -114,3 +114,23 @@ All rules are in `functions/src/config.ts`: group size, minimum members to start
 ## Costs (rough)
 
 At 1,000 active users: Firestore around 1–2M reads/day, inside or near the free tier. The functions mostly run on schedules. Expect roughly ₹0–₹800/month. Set a budget alert.
+
+## Releasing updates
+
+Every release: raise `version:` in `pubspec.yaml` (e.g. `1.0.1+2` → `1.0.2+3`), build, upload to Play.
+
+The app checks for updates on every launch:
+
+| You want | Do this in Firestore → `config/app` |
+|---|---|
+| Users on Play get the new version automatically | Nothing. Google Play's in-app update reports it; the app downloads it in the background and offers **Restart**. |
+| Also nudge users who installed the APK directly | Set `latestVersionCode` (number) to the new build number, e.g. `3`. Older builds see "Update available". |
+| **Force** an update (old version broken, rules changed) | Set `minVersionCode` to the oldest build allowed. Older builds show a blocking "Update required" screen. |
+
+The build number is the part after `+` in `pubspec.yaml`.
+
+## Notifications
+
+- Every notification is also stored in the user's in-app inbox (🔔 in the top bar, with an unread badge). Users can swipe to delete and use "Mark all read".
+- Users can switch off **Daily reminders**, **Group updates** and **Feedback** in Settings. Warnings, removals, suspensions and appeal results are always sent.
+- While the app is open, notifications appear as normal pop-up notifications. Tapping any notification opens the related group.

@@ -71,6 +71,13 @@ class DeviceBridgePlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                     ctx.startActivity(i)
                     result.success(true)
                 }
+                "openNotificationSettings" -> {
+                    val i = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                        .putExtra(Settings.EXTRA_APP_PACKAGE, ctx.packageName)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    ctx.startActivity(i)
+                    result.success(true)
+                }
                 "usageSince" -> {
                     val pkgs = (call.argument<List<String>>("packages") ?: emptyList()).toSet()
                     val start = (call.argument<Number>("startMillis") ?: 0L).toLong()

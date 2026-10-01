@@ -1079,4 +1079,94 @@ class AppLocalizationsMr extends AppLocalizations {
 
   @override
   String get adjustTrust => 'ट्रस्ट स्कोर बदला';
+
+  @override
+  String get notificationsInbox => 'नोटिफिकेशन';
+
+  @override
+  String get markAllRead => 'सर्व वाचले म्हणून चिन्हांकित करा';
+
+  @override
+  String get noNotifications => 'अजून नोटिफिकेशन नाहीत';
+
+  @override
+  String get noNotificationsBody =>
+      'ग्रुप अपडेट, रिमाइंडर, चेतावण्या आणि फीडबॅक अलर्ट इथे दिसतील.';
+
+  @override
+  String get notificationSettings => 'नोटिफिकेशन';
+
+  @override
+  String get notifPermissionOff => 'TestPact साठी नोटिफिकेशन बंद आहेत';
+
+  @override
+  String get openSettings => 'सेटिंग्ज उघडा';
+
+  @override
+  String get notifDaily => 'रोजचे रिमाइंडर';
+
+  @override
+  String get notifDailySub =>
+      'आजची ॲप्स उघडली नसल्यास संध्याकाळी रिमाइंडर, आणि सेटअपची मुदत';
+
+  @override
+  String get notifGroup => 'ग्रुप अपडेट';
+
+  @override
+  String get notifGroupSub => 'ग्रुप तयार, टेस्ट सुरू, नवीन सदस्य, पूर्णता';
+
+  @override
+  String get notifFeedback => 'फीडबॅक';
+
+  @override
+  String get notifFeedbackSub => 'कोणी तुमच्या ॲपवर फीडबॅक दिल्यावर';
+
+  @override
+  String get notifImportantNote =>
+      'चेतावण्या आणि काढल्याच्या सूचना नेहमी पाठवल्या जातात, म्हणजे तुमच्या जागेशी संबंधित काहीही चुकणार नाही.';
+
+  @override
+  String get noInternetTitle => 'इंटरनेट कनेक्शन नाही';
+
+  @override
+  String get noInternetBody =>
+      'तुमचे Wi-Fi किंवा मोबाइल डेटा तपासा. ऑनलाइन होताच TestPact आपोआप जोडले जाईल.';
+
+  @override
+  String get checkingConnection => 'तपासत आहोत…';
+
+  @override
+  String get backOnline => 'पुन्हा ऑनलाइन';
+
+  @override
+  String get updateRequiredTitle => 'अपडेट आवश्यक';
+
+  @override
+  String get updateRequiredBody =>
+      'TestPact ची ही आवृत्ती आता सपोर्टेड नाही. तुमच्या ग्रुपसोबत टेस्टिंग सुरू ठेवण्यासाठी अपडेट करा.';
+
+  @override
+  String get updateAvailableTitle => 'अपडेट उपलब्ध';
+
+  @override
+  String get updateAvailableBody =>
+      'TestPact ची नवीन आवृत्ती सुधारणा आणि फिक्ससह तयार आहे.';
+
+  @override
+  String get updateNow => 'आता अपडेट करा';
+
+  @override
+  String get later => 'नंतर';
+
+  @override
+  String get updateDownloaded =>
+      'अपडेट डाउनलोड झाले. इन्स्टॉल पूर्ण करण्यासाठी रीस्टार्ट करा.';
+
+  @override
+  String get restart => 'रीस्टार्ट';
+
+  @override
+  String appVersion(String version) {
+    return 'आवृत्ती $version';
+  }
 }

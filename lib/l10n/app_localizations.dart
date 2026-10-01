@@ -1983,6 +1983,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Adjust trust score'**
   String get adjustTrust;
+
+  /// No description provided for @notificationsInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsInbox;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all read'**
+  String get markAllRead;
+
+  /// No description provided for @noNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get noNotifications;
+
+  /// No description provided for @noNotificationsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Group updates, reminders, warnings and feedback alerts will show up here.'**
+  String get noNotificationsBody;
+
+  /// No description provided for @notificationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationSettings;
+
+  /// No description provided for @notifPermissionOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are turned off for TestPact'**
+  String get notifPermissionOff;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get openSettings;
+
+  /// No description provided for @notifDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminders'**
+  String get notifDaily;
+
+  /// No description provided for @notifDailySub.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening reminder if today\'s apps aren\'t opened yet, and setup deadlines'**
+  String get notifDailySub;
+
+  /// No description provided for @notifGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Group updates'**
+  String get notifGroup;
+
+  /// No description provided for @notifGroupSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Group formed, test started, new members, completion'**
+  String get notifGroupSub;
+
+  /// No description provided for @notifFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback'**
+  String get notifFeedback;
+
+  /// No description provided for @notifFeedbackSub.
+  ///
+  /// In en, this message translates to:
+  /// **'When someone leaves feedback on your app'**
+  String get notifFeedbackSub;
+
+  /// No description provided for @notifImportantNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Warnings and removals are always sent, so you never miss anything that affects your spot.'**
+  String get notifImportantNote;
+
+  /// No description provided for @noInternetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get noInternetTitle;
+
+  /// No description provided for @noInternetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your Wi-Fi or mobile data. TestPact reconnects automatically as soon as you\'re back online.'**
+  String get noInternetBody;
+
+  /// No description provided for @checkingConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking…'**
+  String get checkingConnection;
+
+  /// No description provided for @backOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Back online'**
+  String get backOnline;
+
+  /// No description provided for @updateRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update required'**
+  String get updateRequiredTitle;
+
+  /// No description provided for @updateRequiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of TestPact is no longer supported. Update to keep testing with your group.'**
+  String get updateRequiredBody;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update available'**
+  String get updateAvailableTitle;
+
+  /// No description provided for @updateAvailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version of TestPact is ready, with improvements and fixes.'**
+  String get updateAvailableBody;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Update now'**
+  String get updateNow;
+
+  /// No description provided for @later.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get later;
+
+  /// No description provided for @updateDownloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Update downloaded. Restart to finish installing.'**
+  String get updateDownloaded;
+
+  /// No description provided for @restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restart;
+
+  /// No description provided for @appVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String appVersion(String version);
 }
 
 class _AppLocalizationsDelegate

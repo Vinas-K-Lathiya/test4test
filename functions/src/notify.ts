@@ -131,29 +131,74 @@ function fill(s: string, params: Record<string, string | number>): string {
   return s.replace(/\{(\w+)\}/g, (_, k) => String(params[k] ?? ""));
 }
 
-/** Push a localized notification to a user. Never throws. */
+/** Which user setting controls each notification. "critical" ones can't be turned off. */
+const CATEGORY: Record<Key, "daily" | "group" | "feedback" | "critical"> = {
+  dailyReminder: "daily",
+  setupReminder: "daily",
+  newFeedback: "feedback",
+  groupFormed: "group",
+  testStarted: "group",
+  newMember: "group",
+  completed: "group",
+  groupCancelled: "group",
+  reinstated: "group",
+  warning1: "critical",
+  warning2: "critical",
+  kicked: "critical",
+  suspended: "critical",
+  setupFailed: "critical",
+  appealResolved: "critical",
+};
+
+/**
+ * Notify a user: always adds an entry to their in-app inbox (users/{uid}/inbox), and sends a
+ * push unless they turned that category off. Never throws.
+ */
 export async function notify(
   uid: string,
   key: Key,
   params: Record<string, string | number> = {},
   data: Record<string, string> = {},
 ): Promise<void> {
+  const userRef = db.collection("users").doc(uid);
+  let snap: FirebaseFirestore.DocumentSnapshot;
   try {
-    const snap = await db.collection("users").doc(uid).get();
-    const token = snap.get("fcmToken") as string | undefined;
-    if (!token) return;
-    const locale = (snap.get("locale") as string | undefined) ?? "en";
-    const [title, body] = (T[locale] ?? T.en)[key];
+    snap = await userRef.get();
+    if (!snap.exists) return; // deleted accounts and test bots
+  } catch (e) {
+    logger.warn("notify lookup failed", { uid, key, e });
+    return;
+  }
+  const locale = (snap.get("locale") as string | undefined) ?? "en";
+  const [t, b] = (T[locale] ?? T.en)[key];
+  const title = fill(t, params);
+  const body = fill(b, params);
+
+  try {
+    await userRef.collection("inbox").add({ key, title, body, data, read: false, at: FieldValue.serverTimestamp() });
+  } catch (e) {
+    logger.warn("inbox write failed", { uid, key, e });
+  }
+
+  const category = CATEGORY[key];
+  const prefs = (snap.get("notifications") as Record<string, boolean> | undefined) ?? {};
+  if (category !== "critical" && prefs[category] === false) return;
+  const token = snap.get("fcmToken") as string | undefined;
+  if (!token) return;
+  try {
     await getMessaging().send({
       token,
-      notification: { title: fill(title, params), body: fill(body, params) },
+      notification: { title, body },
       data: { key, ...data },
-      android: { priority: "high", notification: { channelId: "testpact_default", color: "#4F46E5" } },
+      android: {
+        priority: "high",
+        notification: { channelId: "testpact_default", color: "#4F46E5", icon: "ic_stat_testpact" },
+      },
     });
   } catch (e: unknown) {
     const code = (e as { code?: string }).code ?? "";
     if (code.includes("registration-token-not-registered") || code.includes("invalid-argument")) {
-      await db.collection("users").doc(uid).update({ fcmToken: FieldValue.delete() }).catch(() => undefined);
+      await userRef.update({ fcmToken: FieldValue.delete() }).catch(() => undefined);
     } else {
       logger.warn("notify failed", { uid, key, e });
     }
