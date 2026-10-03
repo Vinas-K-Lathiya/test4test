@@ -5,12 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 /// What the app knows about newer versions.
 class UpdateStatus {
-  const UpdateStatus({
-    required this.currentBuild,
-    required this.required,
-    required this.optional,
-    required this.play,
-  });
+  const UpdateStatus({required this.currentBuild, required this.required, required this.optional, required this.play});
 
   final int currentBuild;
 

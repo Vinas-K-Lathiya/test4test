@@ -240,4 +240,14 @@ EN = {
   "updateNow": ("Update now", {}), "later": ("Later", {}),
   "updateDownloaded": ("Update downloaded. Restart to finish installing.", {}), "restart": ("Restart", {}),
   "appVersion": ("Version {version}", {"version": "String"}),
+
+  # redesign
+  "welcomeBack": ("Great to see you back!", {}), "viewAll": ("View all", {}), "more": ("More", {}),
+  "filterAll": ("All", {}), "statusTesting": ("Testing", {}), "inQueueShort": ("In queue", {}), "statusReady": ("Ready", {}),
+  "memberDone": ("Done", {}), "memberTesting": ("Testing", {}), "memberPending": ("Today", {}),
+  "todaysTasks": ("Today's tasks", {}),
+  "tasksCompleted": ("{total} apps · {done}/{total} completed", {"total": "int", "done": "int"}),
+  "groupMembersCount": ("Group members ({count})", {"count": "int"}),
+  "recentActivity": ("Recent activity", {}),
+  "badgesEarned": ("{earned} of {total} earned", {"earned": "int", "total": "int"}),
 }

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../l10n.dart';
 import '../providers.dart';
 import '../widgets/common.dart';
+import '../widgets/ui.dart';
 
 class JoinQueueScreen extends ConsumerStatefulWidget {
   const JoinQueueScreen({super.key});
@@ -25,59 +26,87 @@ class _JoinQueueScreenState extends ConsumerState<JoinQueueScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l.joinGroup)),
-      body: AsyncView(apps, builder: (list) {
-        _appId ??= list.length == 1 ? list.first.id : null;
-        return ListView(padding: const EdgeInsets.all(16), children: [
-          SectionTitle(l.chooseApp),
-          Card(
-            child: RadioGroup<String>(
-              groupValue: _appId,
-              onChanged: (v) => setState(() => _appId = v),
-              child: Column(children: [
-                for (final a in list)
-                  RadioListTile<String>(
-                    value: a.id,
-                    title: Text(a.name),
-                    subtitle: Text(a.packageName),
-                    secondary: AppIconView(name: a.name, url: a.iconUrl, size: 40),
-                  ),
-              ]),
-            ),
-          ),
-          SectionTitle(l.yourCommitment),
-          Card(
-            child: Column(children: [
-              for (var i = 0; i < rules.length; i++)
-                CheckboxListTile(
-                  value: _agreed[i],
-                  onChanged: (v) => setState(() => _agreed[i] = v ?? false),
-                  title: Text(rules[i]),
-                  controlAffinity: ListTileControlAffinity.leading,
+      body: AsyncView(
+        apps,
+        builder: (list) {
+          _appId ??= list.length == 1 ? list.first.id : null;
+          return ListView(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+            children: [
+              GradientCard(
+                image: 'people',
+                imageSize: 88,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l.joinCardTitle, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+                    const SizedBox(height: 6),
+                    Text(l.joinCardBody, style: const TextStyle(color: Colors.white70, height: 1.35)),
+                  ],
                 ),
-            ]),
-          ),
-          const SizedBox(height: 20),
-          FilledButton(
-            onPressed: !canJoin
-                ? null
-                : () async {
-                    String? groupId;
-                    final ok = await runAction(
-                      context,
-                      () async => groupId = await ref.read(apiProvider).joinQueue(_appId!),
-                      success: l.joinedQueue,
-                    );
-                    if (!ok || !context.mounted) return;
-                    if (groupId != null) {
-                      context.pushReplacement('/group/$groupId');
-                    } else {
-                      context.pop();
-                    }
-                  },
-            child: Text(l.joinQueue),
-          ),
-        ]);
-      }),
+              ),
+              SectionTitle(l.chooseApp),
+              SoftCard(
+                padding: EdgeInsets.zero,
+                child: Card(
+                  child: RadioGroup<String>(
+                    groupValue: _appId,
+                    onChanged: (v) => setState(() => _appId = v),
+                    child: Column(
+                      children: [
+                        for (final a in list)
+                          RadioListTile<String>(
+                            value: a.id,
+                            title: Text(a.name),
+                            subtitle: Text(a.packageName),
+                            secondary: AppIconView(name: a.name, url: a.iconUrl, size: 40),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SectionTitle(l.yourCommitment),
+              SoftCard(
+                padding: EdgeInsets.zero,
+                child: Card(
+                  child: Column(
+                    children: [
+                      for (var i = 0; i < rules.length; i++)
+                        CheckboxListTile(
+                          value: _agreed[i],
+                          onChanged: (v) => setState(() => _agreed[i] = v ?? false),
+                          title: Text(rules[i]),
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              FilledButton(
+                onPressed: !canJoin
+                    ? null
+                    : () async {
+                        String? groupId;
+                        final ok = await runAction(
+                          context,
+                          () async => groupId = await ref.read(apiProvider).joinQueue(_appId!),
+                          success: l.joinedQueue,
+                        );
+                        if (!ok || !context.mounted) return;
+                        if (groupId != null) {
+                          context.pushReplacement('/group/$groupId');
+                        } else {
+                          context.pop();
+                        }
+                      },
+                child: Text(l.joinQueue),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

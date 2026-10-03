@@ -7,6 +7,7 @@ import '../l10n.dart';
 import '../services/updates.dart';
 import '../theme.dart';
 import 'common.dart';
+import 'ui.dart';
 
 /// Blocks the app when an update is required; offers optional updates once per launch.
 class UpdateGate extends ConsumerStatefulWidget {
@@ -37,11 +38,13 @@ class _UpdateGateState extends ConsumerState<UpdateGate> {
     try {
       final r = await InAppUpdate.startFlexibleUpdate();
       if (r != AppUpdateResult.success) return;
-      messenger?.showSnackBar(SnackBar(
-        duration: const Duration(days: 1),
-        content: Text(l.updateDownloaded),
-        action: SnackBarAction(label: l.restart, onPressed: InAppUpdate.completeFlexibleUpdate),
-      ));
+      messenger?.showSnackBar(
+        SnackBar(
+          duration: const Duration(days: 1),
+          content: Text(l.updateDownloaded),
+          action: SnackBarAction(label: l.restart, onPressed: InAppUpdate.completeFlexibleUpdate),
+        ),
+      );
     } catch (_) {
       await openUrl(AppConfig.playStoreUrl);
     }
@@ -57,7 +60,7 @@ class _UpdateGateState extends ConsumerState<UpdateGate> {
       final go = await showDialog<bool>(
         context: ctx,
         builder: (d) => AlertDialog(
-          icon: const Icon(Icons.system_update_rounded, color: Brand.indigo, size: 36),
+          icon: const Img3d('sparkles', size: 56),
           title: Text(l.updateAvailableTitle),
           content: Text(l.updateAvailableBody),
           actions: [
@@ -90,26 +93,34 @@ class _UpdateGateState extends ConsumerState<UpdateGate> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(32),
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(24),
-                child: Image.asset('assets/branding/logo_round.png', width: 96, height: 96),
-              ),
-              const SizedBox(height: 28),
-              Text(l.updateRequiredTitle,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 168,
+                  height: 168,
+                  decoration: const BoxDecoration(gradient: Brand.washGradient, shape: BoxShape.circle),
+                  alignment: Alignment.center,
+                  child: const Img3d('rocket', size: 104),
+                ),
+                const SizedBox(height: 28),
+                Text(
+                  l.updateRequiredTitle,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
-              const SizedBox(height: 10),
-              Text(l.updateRequiredBody, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
-              const SizedBox(height: 28),
-              FilledButton.icon(
-                onPressed: () => _updateNow(s),
-                icon: const Icon(Icons.system_update_rounded),
-                label: Text(l.updateNow),
-              ),
-              const SizedBox(height: 12),
-              Text(l.appVersion('${s.currentBuild}'), style: Theme.of(context).textTheme.bodySmall),
-            ]),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 10),
+                Text(l.updateRequiredBody, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+                const SizedBox(height: 28),
+                FilledButton.icon(
+                  onPressed: () => _updateNow(s),
+                  icon: const Icon(Icons.system_update_rounded),
+                  label: Text(l.updateNow),
+                ),
+                const SizedBox(height: 12),
+                Text(l.appVersion('${s.currentBuild}'), style: Theme.of(context).textTheme.bodySmall),
+              ],
+            ),
           ),
         ),
       ),

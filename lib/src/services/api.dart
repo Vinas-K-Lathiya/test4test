@@ -33,8 +33,7 @@ class Api {
     required String groupId,
     required Map<String, Map<String, Object>> apps,
     required bool usageAccess,
-  }) =>
-      call('syncActivity', {'groupId': groupId, 'apps': apps, 'usageAccess': usageAccess});
+  }) => call('syncActivity', {'groupId': groupId, 'apps': apps, 'usageAccess': usageAccess});
 
   Future<void> submitFeedback({
     required String groupId,
@@ -43,15 +42,14 @@ class Api {
     required String category,
     required String text,
     String? screenshotPath,
-  }) =>
-      call('submitFeedback', {
-        'groupId': groupId,
-        'toUid': toUid,
-        'rating': rating,
-        'category': category,
-        'text': text,
-        'screenshotPath': ?screenshotPath,
-      });
+  }) => call('submitFeedback', {
+    'groupId': groupId,
+    'toUid': toUid,
+    'rating': rating,
+    'category': category,
+    'text': text,
+    'screenshotPath': ?screenshotPath,
+  });
 
   Future<void> rateFeedback(String feedbackId, bool helpful) =>
       call('rateFeedback', {'feedbackId': feedbackId, 'helpful': helpful});
@@ -62,14 +60,13 @@ class Api {
     required String reason,
     required String details,
     String? screenshotPath,
-  }) =>
-      call('submitReport', {
-        'groupId': groupId,
-        'targetUid': targetUid,
-        'reason': reason,
-        'details': details,
-        'screenshotPath': ?screenshotPath,
-      });
+  }) => call('submitReport', {
+    'groupId': groupId,
+    'targetUid': targetUid,
+    'reason': reason,
+    'details': details,
+    'screenshotPath': ?screenshotPath,
+  });
 
   // Admin
   Future<void> resolveReview(String reviewId, String decision, String note) =>

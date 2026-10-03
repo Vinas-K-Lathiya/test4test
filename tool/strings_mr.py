@@ -197,4 +197,13 @@ T = {
   "updateNow": "आता अपडेट करा", "later": "नंतर",
   "updateDownloaded": "अपडेट डाउनलोड झाले. इन्स्टॉल पूर्ण करण्यासाठी रीस्टार्ट करा.", "restart": "रीस्टार्ट",
   "appVersion": "आवृत्ती {version}",
+
+  "welcomeBack": "तुम्हाला पुन्हा पाहून छान वाटले!", "viewAll": "सर्व पहा", "more": "आणखी",
+  "filterAll": "सर्व", "statusTesting": "टेस्टिंग", "inQueueShort": "रांगेत", "statusReady": "तयार",
+  "memberDone": "पूर्ण", "memberTesting": "टेस्टिंग", "memberPending": "आज बाकी",
+  "todaysTasks": "आजची कामे",
+  "tasksCompleted": "{total} ॲप्स · {done}/{total} पूर्ण",
+  "groupMembersCount": "ग्रुप सदस्य ({count})",
+  "recentActivity": "अलीकडील घडामोडी",
+  "badgesEarned": "{total} पैकी {earned} मिळाले",
 }

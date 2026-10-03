@@ -2145,6 +2145,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version {version}'**
   String appVersion(String version);
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Great to see you back!'**
+  String get welcomeBack;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get viewAll;
+
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// No description provided for @filterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAll;
+
+  /// No description provided for @statusTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing'**
+  String get statusTesting;
+
+  /// No description provided for @inQueueShort.
+  ///
+  /// In en, this message translates to:
+  /// **'In queue'**
+  String get inQueueShort;
+
+  /// No description provided for @statusReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get statusReady;
+
+  /// No description provided for @memberDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get memberDone;
+
+  /// No description provided for @memberTesting.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing'**
+  String get memberTesting;
+
+  /// No description provided for @memberPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get memberPending;
+
+  /// No description provided for @todaysTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s tasks'**
+  String get todaysTasks;
+
+  /// No description provided for @tasksCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{total} apps · {done}/{total} completed'**
+  String tasksCompleted(int total, int done);
+
+  /// No description provided for @groupMembersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Group members ({count})'**
+  String groupMembersCount(int count);
+
+  /// No description provided for @recentActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent activity'**
+  String get recentActivity;
+
+  /// No description provided for @badgesEarned.
+  ///
+  /// In en, this message translates to:
+  /// **'{earned} of {total} earned'**
+  String badgesEarned(int earned, int total);
 }
 
 class _AppLocalizationsDelegate

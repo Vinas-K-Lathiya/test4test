@@ -26,14 +26,21 @@ class GroupScreen extends ConsumerWidget {
 
     return groupV.when(
       loading: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) => Scaffold(appBar: AppBar(), body: Center(child: Text(friendlyError(context, e)))),
+      error: (e, _) => Scaffold(
+        appBar: AppBar(),
+        body: Center(child: Text(friendlyError(context, e))),
+      ),
       data: (group) {
-        if (group == null) return Scaffold(appBar: AppBar(), body: Center(child: Text(l.errGeneric)));
+        if (group == null) {
+          return Scaffold(
+            appBar: AppBar(),
+            body: Center(child: Text(l.errGeneric)),
+          );
+        }
         final members = membersV.value ?? const <Member>[];
         final me = members.where((m) => m.uid == uid).firstOrNull;
-        final needsSetup = me != null &&
-            me.isLive &&
-            (me.state == MemberState.setup || me.emailsAddedVersion < group.rosterVersion);
+        final needsSetup =
+            me != null && me.isLive && (me.state == MemberState.setup || me.emailsAddedVersion < group.rosterVersion);
         final showToday = group.status == GroupStatus.active || group.status == GroupStatus.completed;
 
         final tabs = <(String, Widget)>[
@@ -52,17 +59,25 @@ class GroupScreen extends ConsumerWidget {
           length: tabs.length,
           child: Scaffold(
             appBar: AppBar(
-              title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(l.groupTitle(group.shortId)),
-                Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
-              ]),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l.groupTitle(group.shortId)),
+                  Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+                ],
+              ),
               actions: [
                 if (me != null && me.isLive)
                   PopupMenuButton<String>(
                     onSelected: (v) async {
                       if (v != 'leave') return;
-                      final ok = await confirm(context,
-                          title: l.leaveGroupTitle, body: l.leaveGroupBody, ok: l.leave, danger: true);
+                      final ok = await confirm(
+                        context,
+                        title: l.leaveGroupTitle,
+                        body: l.leaveGroupBody,
+                        ok: l.leave,
+                        danger: true,
+                      );
                       if (ok && context.mounted) {
                         final done = await runAction(context, () => ref.read(apiProvider).leaveGroup(groupId));
                         if (done && context.mounted) context.pop();
@@ -71,12 +86,17 @@ class GroupScreen extends ConsumerWidget {
                     itemBuilder: (_) => [PopupMenuItem(value: 'leave', child: Text(l.leaveGroup))],
                   ),
               ],
-              bottom: TabBar(isScrollable: tabs.length > 3, tabs: [for (final t in tabs) Tab(text: t.$1)]),
+              bottom: TabBar(
+                isScrollable: tabs.length > 3,
+                tabs: [for (final t in tabs) Tab(text: t.$1)],
+              ),
             ),
-            body: Column(children: [
-              if (me != null && !me.isLive) _StateBanner(me: me),
-              Expanded(child: TabBarView(children: [for (final t in tabs) t.$2])),
-            ]),
+            body: Column(
+              children: [
+                if (me != null && !me.isLive) _StateBanner(me: me),
+                Expanded(child: TabBarView(children: [for (final t in tabs) t.$2])),
+              ],
+            ),
           ),
         );
       },
@@ -100,11 +120,13 @@ class _StateBanner extends StatelessWidget {
       color: color.withValues(alpha: 0.12),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 10, 8, 10),
-        child: Row(children: [
-          Expanded(child: Text(text)),
-          if (me.state == MemberState.removed || me.state == MemberState.suspended)
-            TextButton(onPressed: () => context.push('/appeal'), child: Text(l.appeal)),
-        ]),
+        child: Row(
+          children: [
+            Expanded(child: Text(text)),
+            if (me.state == MemberState.removed || me.state == MemberState.suspended)
+              TextButton(onPressed: () => context.push('/appeal'), child: Text(l.appeal)),
+          ],
+        ),
       ),
     );
   }

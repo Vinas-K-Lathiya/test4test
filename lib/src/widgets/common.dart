@@ -7,6 +7,7 @@ import '../l10n.dart';
 import '../models.dart';
 import '../theme.dart';
 import 'labels.dart';
+import 'ui.dart';
 
 class AppAvatar extends StatelessWidget {
   const AppAvatar({super.key, required this.name, this.url, this.size = 40});
@@ -14,14 +15,21 @@ class AppAvatar extends StatelessWidget {
   final String? url;
   final double size;
 
+  static const _palette = [
+    Color(0xFF6366F1), Color(0xFF8B5CF6), Color(0xFFEC4899), Color(0xFFF59E0B),
+    Color(0xFF10B981), Color(0xFF0EA5E9), Color(0xFFEF4444), Color(0xFF14B8A6),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final initials = name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase();
+    final c = _palette[name.codeUnits.fold<int>(0, (a, b) => a + b) % _palette.length];
     return CircleAvatar(
       radius: size / 2,
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: c,
       foregroundImage: url != null && url!.isNotEmpty ? NetworkImage(url!) : null,
-      child: Text(initials, style: TextStyle(fontSize: size * 0.4, fontWeight: FontWeight.w700)),
+      child: Text(initials,
+          style: TextStyle(fontSize: size * 0.42, fontWeight: FontWeight.w800, color: Colors.white)),
     );
   }
 }
@@ -38,23 +46,28 @@ class AppIconView extends StatelessWidget {
     if (url != null && url!.isNotEmpty) {
       return ClipRRect(
         borderRadius: r,
-        child: Image.network(url!, width: size, height: size, fit: BoxFit.cover,
-            errorBuilder: (_, _, _) => _fallback(r)),
+        child: Image.network(
+          url!,
+          width: size,
+          height: size,
+          fit: BoxFit.cover,
+          errorBuilder: (_, _, _) => _fallback(r),
+        ),
       );
     }
     return _fallback(r);
   }
 
   Widget _fallback(BorderRadius r) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(gradient: Brand.gradient, borderRadius: r),
-        alignment: Alignment.center,
-        child: Text(
-          name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase(),
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: size * 0.42),
-        ),
-      );
+    width: size,
+    height: size,
+    decoration: BoxDecoration(gradient: Brand.gradient, borderRadius: r),
+    alignment: Alignment.center,
+    child: Text(
+      name.trim().isEmpty ? '?' : name.trim()[0].toUpperCase(),
+      style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: size * 0.42),
+    ),
+  );
 }
 
 class StatusDot extends StatelessWidget {
@@ -62,8 +75,11 @@ class StatusDot extends StatelessWidget {
   final Color color;
   final double size;
   @override
-  Widget build(BuildContext context) =>
-      Container(width: size, height: size, decoration: BoxDecoration(color: color, shape: BoxShape.circle));
+  Widget build(BuildContext context) => Container(
+    width: size,
+    height: size,
+    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+  );
 }
 
 class SectionTitle extends StatelessWidget {
@@ -71,24 +87,14 @@ class SectionTitle extends StatelessWidget {
   final String text;
   final Widget? trailing;
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(4, 20, 4, 8),
-        child: Row(children: [
-          Expanded(
-            child: Text(text,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    )),
-          ),
-          ?trailing,
-        ]),
-      );
+  Widget build(BuildContext context) => SectionHeader(text, trailing: trailing);
 }
 
+/// Card with a 3D image (or icon), title, body and an optional action.
 class InfoCard extends StatelessWidget {
-  const InfoCard({super.key, required this.icon, required this.title, this.body, this.color, this.action});
-  final IconData icon;
+  const InfoCard({super.key, this.icon, this.image, required this.title, this.body, this.color, this.action});
+  final IconData? icon;
+  final String? image;
   final String title;
   final String? body;
   final Color? color;
@@ -97,55 +103,86 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = color ?? Theme.of(context).colorScheme.primary;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(color: c.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, color: c, size: 22),
-          ),
+    return SoftCard(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (image != null)
+            ImgTile(image!, size: 48, color: c)
+          else
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(color: c.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(14)),
+              child: Icon(icon ?? Icons.info_outline_rounded, color: c, size: 24),
+            ),
           const SizedBox(width: 14),
           Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-              if (body != null) ...[
-                const SizedBox(height: 4),
-                Text(body!, style: Theme.of(context).textTheme.bodyMedium),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800)),
+                if (body != null) ...[
+                  const SizedBox(height: 4),
+                  Text(body!, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.35)),
+                ],
+                if (action != null) ...[const SizedBox(height: 10), action!],
               ],
-              if (action != null) ...[const SizedBox(height: 10), action!],
-            ]),
+            ),
           ),
-        ]),
+        ],
       ),
     );
   }
 }
 
+/// Centered illustration + message for empty lists and blocked states.
 class EmptyState extends StatelessWidget {
-  const EmptyState({super.key, required this.icon, required this.title, this.body, this.action});
-  final IconData icon;
+  const EmptyState({super.key, this.icon, this.image, required this.title, this.body, this.action});
+  final IconData? icon;
+  final String? image;
   final String title;
   final String? body;
   final Widget? action;
 
   @override
   Widget build(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Icon(icon, size: 56, color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.6)),
-            const SizedBox(height: 16),
-            Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
-            if (body != null) ...[
-              const SizedBox(height: 8),
-              Text(body!, textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
-            ],
-            if (action != null) ...[const SizedBox(height: 20), action!],
-          ]),
-        ),
-      );
+    child: SingleChildScrollView(
+      padding: const EdgeInsets.all(32),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 128,
+            height: 128,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: image != null
+                ? Img3d(image!, size: 80)
+                : Icon(icon ?? Icons.inbox_rounded, size: 56, color: Theme.of(context).colorScheme.primary),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+          ),
+          if (body != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              body!,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Brand.muted, height: 1.4),
+            ),
+          ],
+          if (action != null) ...[const SizedBox(height: 22), action!],
+        ],
+      ),
+    ),
+  );
 }
 
 class TrustChip extends StatelessWidget {
@@ -160,12 +197,17 @@ class TrustChip extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: dense ? 8 : 10, vertical: dense ? 2 : 4),
       decoration: BoxDecoration(color: c.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(99)),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(Icons.verified_user_rounded, size: dense ? 12 : 14, color: c),
-        const SizedBox(width: 4),
-        Text('${levelLabel(context.l10n, level)} · $score',
-            style: TextStyle(color: c, fontWeight: FontWeight.w700, fontSize: dense ? 11 : 12)),
-      ]),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.verified_user_rounded, size: dense ? 12 : 14, color: c),
+          const SizedBox(width: 4),
+          Text(
+            '${levelLabel(context.l10n, level)} · $score',
+            style: TextStyle(color: c, fontWeight: FontWeight.w700, fontSize: dense ? 11 : 12),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -178,15 +220,17 @@ class AsyncView<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => value.when(
-        data: builder,
-        loading: () => const Center(child: Padding(padding: EdgeInsets.all(24), child: CircularProgressIndicator())),
-        error: (e, _) => Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Text(friendlyError(context, e), textAlign: TextAlign.center),
-          ),
-        ),
-      );
+    data: builder,
+    loading: () => const Center(
+      child: Padding(padding: EdgeInsets.all(24), child: CircularProgressIndicator()),
+    ),
+    error: (e, _) => Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Text(friendlyError(context, e), textAlign: TextAlign.center),
+      ),
+    ),
+  );
 }
 
 String friendlyError(BuildContext context, Object e) {
@@ -239,7 +283,13 @@ Future<bool> runAction(BuildContext context, Future<void> Function() action, {St
   }
 }
 
-Future<bool> confirm(BuildContext context, {required String title, required String body, required String ok, bool danger = false}) async {
+Future<bool> confirm(
+  BuildContext context, {
+  required String title,
+  required String body,
+  required String ok,
+  bool danger = false,
+}) async {
   final r = await showDialog<bool>(
     context: context,
     builder: (c) => AlertDialog(

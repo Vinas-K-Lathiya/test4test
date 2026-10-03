@@ -1169,4 +1169,55 @@ class AppLocalizationsMr extends AppLocalizations {
   String appVersion(String version) {
     return 'आवृत्ती $version';
   }
+
+  @override
+  String get welcomeBack => 'तुम्हाला पुन्हा पाहून छान वाटले!';
+
+  @override
+  String get viewAll => 'सर्व पहा';
+
+  @override
+  String get more => 'आणखी';
+
+  @override
+  String get filterAll => 'सर्व';
+
+  @override
+  String get statusTesting => 'टेस्टिंग';
+
+  @override
+  String get inQueueShort => 'रांगेत';
+
+  @override
+  String get statusReady => 'तयार';
+
+  @override
+  String get memberDone => 'पूर्ण';
+
+  @override
+  String get memberTesting => 'टेस्टिंग';
+
+  @override
+  String get memberPending => 'आज बाकी';
+
+  @override
+  String get todaysTasks => 'आजची कामे';
+
+  @override
+  String tasksCompleted(int total, int done) {
+    return '$total ॲप्स · $done/$total पूर्ण';
+  }
+
+  @override
+  String groupMembersCount(int count) {
+    return 'ग्रुप सदस्य ($count)';
+  }
+
+  @override
+  String get recentActivity => 'अलीकडील घडामोडी';
+
+  @override
+  String badgesEarned(int earned, int total) {
+    return '$total पैकी $earned मिळाले';
+  }
 }

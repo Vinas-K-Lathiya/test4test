@@ -5,20 +5,20 @@ import '../models.dart';
 import '../theme.dart';
 
 String levelLabel(AppLocalizations l, TrustLevel level) => switch (level) {
-      TrustLevel.probation => l.levelProbation,
-      TrustLevel.newcomer => l.levelNewcomer,
-      TrustLevel.member => l.levelMember,
-      TrustLevel.trusted => l.levelTrusted,
-      TrustLevel.topTester => l.levelTopTester,
-    };
+  TrustLevel.probation => l.levelProbation,
+  TrustLevel.newcomer => l.levelNewcomer,
+  TrustLevel.member => l.levelMember,
+  TrustLevel.trusted => l.levelTrusted,
+  TrustLevel.topTester => l.levelTopTester,
+};
 
 Color levelColor(TrustLevel level) => switch (level) {
-      TrustLevel.probation => Brand.red,
-      TrustLevel.newcomer => Brand.grey,
-      TrustLevel.member => Brand.teal,
-      TrustLevel.trusted => Brand.indigo,
-      TrustLevel.topTester => Brand.violet,
-    };
+  TrustLevel.probation => Brand.red,
+  TrustLevel.newcomer => Brand.grey,
+  TrustLevel.member => Brand.teal,
+  TrustLevel.trusted => Brand.indigo,
+  TrustLevel.topTester => Brand.violet,
+};
 
 TrustLevel levelForScore(int score) {
   if (score < 40) return TrustLevel.probation;
@@ -28,14 +28,14 @@ TrustLevel levelForScore(int score) {
 }
 
 String reportReasonLabel(AppLocalizations l, String r) => switch (r) {
-      'not_installed' => l.reasonNotInstalled,
-      'uninstalled' => l.reasonUninstalled,
-      'not_opening' => l.reasonNotOpening,
-      'email_not_added' => l.reasonEmailNotAdded,
-      'spam_abuse' => l.reasonSpam,
-      'fake_feedback' => l.reasonFakeFeedback,
-      _ => l.reasonOther,
-    };
+  'not_installed' => l.reasonNotInstalled,
+  'uninstalled' => l.reasonUninstalled,
+  'not_opening' => l.reasonNotOpening,
+  'email_not_added' => l.reasonEmailNotAdded,
+  'spam_abuse' => l.reasonSpam,
+  'fake_feedback' => l.reasonFakeFeedback,
+  _ => l.reasonOther,
+};
 
 const reportReasons = [
   'not_installed',
@@ -48,42 +48,42 @@ const reportReasons = [
 ];
 
 String categoryLabel(AppLocalizations l, String c) => switch (c) {
-      'bug' => l.catBug,
-      'ux' => l.catUx,
-      'idea' => l.catIdea,
-      'praise' => l.catPraise,
-      _ => l.catOther,
-    };
+  'bug' => l.catBug,
+  'ux' => l.catUx,
+  'idea' => l.catIdea,
+  'praise' => l.catPraise,
+  _ => l.catOther,
+};
 
 const feedbackCategories = ['bug', 'ux', 'idea', 'praise', 'other'];
 
 String badgeLabel(AppLocalizations l, String b) => switch (b) {
-      'first_pact' => l.badgeFirstPact,
-      'veteran' => l.badgeVeteran,
-      'perfect_streak' => l.badgePerfect,
-      'helpful_reviewer' => l.badgeHelpful,
-      'top_tester' => l.badgeTopTester,
-      _ => b,
-    };
+  'first_pact' => l.badgeFirstPact,
+  'veteran' => l.badgeVeteran,
+  'perfect_streak' => l.badgePerfect,
+  'helpful_reviewer' => l.badgeHelpful,
+  'top_tester' => l.badgeTopTester,
+  _ => b,
+};
 
 IconData badgeIcon(String b) => switch (b) {
-      'first_pact' => Icons.flag_rounded,
-      'veteran' => Icons.military_tech_rounded,
-      'perfect_streak' => Icons.local_fire_department_rounded,
-      'helpful_reviewer' => Icons.rate_review_rounded,
-      'top_tester' => Icons.workspace_premium_rounded,
-      _ => Icons.star_rounded,
-    };
+  'first_pact' => Icons.flag_rounded,
+  'veteran' => Icons.military_tech_rounded,
+  'perfect_streak' => Icons.local_fire_department_rounded,
+  'helpful_reviewer' => Icons.rate_review_rounded,
+  'top_tester' => Icons.workspace_premium_rounded,
+  _ => Icons.star_rounded,
+};
 
 String removedReasonLabel(AppLocalizations l, String? r) => switch (r) {
-      'setup_failed' => l.removedSetup,
-      'inactive' => l.removedInactive,
-      'reported' => l.removedReported,
-      'left' => l.removedLeft,
-      'group_cancelled' => l.removedCancelled,
-      'group_ended' => l.removedEnded,
-      _ => l.removedOther,
-    };
+  'setup_failed' => l.removedSetup,
+  'inactive' => l.removedInactive,
+  'reported' => l.removedReported,
+  'left' => l.removedLeft,
+  'group_cancelled' => l.removedCancelled,
+  'group_ended' => l.removedEnded,
+  _ => l.removedOther,
+};
 
 String trustReasonLabel(AppLocalizations l, String r) {
   if (r.startsWith('admin:')) return l.trustAdmin(r.substring(6).trim());
@@ -103,19 +103,19 @@ String trustReasonLabel(AppLocalizations l, String r) {
 }
 
 String groupStatusLabel(AppLocalizations l, GroupStatus s) => switch (s) {
-      GroupStatus.setup => l.statusSetup,
-      GroupStatus.active => l.statusActive,
-      GroupStatus.completed => l.statusCompleted,
-      GroupStatus.cancelled => l.statusCancelled,
-    };
+  GroupStatus.setup => l.statusSetup,
+  GroupStatus.active => l.statusActive,
+  GroupStatus.completed => l.statusCompleted,
+  GroupStatus.cancelled => l.statusCancelled,
+};
 
 String memberStateLabel(AppLocalizations l, MemberState s) => switch (s) {
-      MemberState.setup => l.stateSetup,
-      MemberState.active => l.stateActive,
-      MemberState.suspended => l.stateSuspended,
-      MemberState.removed => l.stateRemoved,
-      MemberState.completed => l.stateCompleted,
-    };
+  MemberState.setup => l.stateSetup,
+  MemberState.active => l.stateActive,
+  MemberState.suspended => l.stateSuspended,
+  MemberState.removed => l.stateRemoved,
+  MemberState.completed => l.stateCompleted,
+};
 
 /// Traffic-light status for a member in the group list.
 Color memberColor(Member m) {
@@ -134,3 +134,57 @@ Color memberColor(Member m) {
       return Brand.amber;
   }
 }
+
+// ---- 3D illustration names (assets/3d) ---------------------------------------
+
+String badgeImage(String b) => switch (b) {
+  'first_pact' => 'star',
+  'veteran' => 'medal',
+  'perfect_streak' => 'fire',
+  'helpful_reviewer' => 'thumbsup',
+  'top_tester' => 'crown',
+  _ => 'sparkles',
+};
+
+const allBadges = ['first_pact', 'perfect_streak', 'helpful_reviewer', 'veteran', 'top_tester'];
+
+String trustReasonImage(String r) {
+  if (r.startsWith('admin:')) return 'key';
+  return switch (r) {
+    'group_completed' => 'trophy',
+    'active_day' => 'check',
+    'missed_day' => 'warning',
+    'helpful_feedback' => 'thumbsup',
+    'kicked_inactive' || 'kicked_reported' || 'left_group' => 'noentry',
+    'setup_failed' => 'hourglass',
+    'false_report' || 'appeal_accepted' => 'balance',
+    _ => 'sparkles',
+  };
+}
+
+String notificationImage(String key) => switch (key) {
+  'warning1' || 'warning2' => 'warning',
+  'setupReminder' => 'hourglass',
+  'kicked' || 'setupFailed' || 'groupCancelled' => 'noentry',
+  'suspended' || 'appealResolved' => 'balance',
+  'completed' => 'trophy',
+  'newFeedback' => 'speech',
+  'dailyReminder' => 'bell',
+  'reinstated' => 'check',
+  'testStarted' => 'rocket',
+  'newMember' => 'handshake',
+  _ => 'people',
+};
+
+String eventImage(String type) => switch (type) {
+  'formed' => 'people',
+  'joined' => 'handshake',
+  'emailsAdded' => 'envelope',
+  'started' => 'rocket',
+  'memberActive' => 'check',
+  'warning' => 'warning',
+  'removed' || 'cancelled' => 'noentry',
+  'suspended' || 'reinstated' => 'balance',
+  'completed' => 'trophy',
+  _ => 'sparkles',
+};

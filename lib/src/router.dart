@@ -47,13 +47,22 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/', builder: (_, _) => const HomeShell()),
       GoRoute(path: '/join', builder: (_, _) => const JoinQueueScreen()),
       GoRoute(path: '/apps/new', builder: (_, _) => const AppFormScreen()),
-      GoRoute(path: '/apps/:id', builder: (_, s) => AppFormScreen(appId: s.pathParameters['id'])),
-      GoRoute(path: '/group/:id', builder: (_, s) => GroupScreen(groupId: s.pathParameters['id']!)),
+      GoRoute(
+        path: '/apps/:id',
+        builder: (_, s) => AppFormScreen(appId: s.pathParameters['id']),
+      ),
+      GoRoute(
+        path: '/group/:id',
+        builder: (_, s) => GroupScreen(groupId: s.pathParameters['id']!),
+      ),
       GoRoute(
         path: '/group/:id/feedback/:to',
         builder: (_, s) => FeedbackFormScreen(groupId: s.pathParameters['id']!, toUid: s.pathParameters['to']!),
       ),
-      GoRoute(path: '/profile/:uid', builder: (_, s) => PublicProfileScreen(uid: s.pathParameters['uid']!)),
+      GoRoute(
+        path: '/profile/:uid',
+        builder: (_, s) => PublicProfileScreen(uid: s.pathParameters['uid']!),
+      ),
       GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),
       GoRoute(path: '/appeal', builder: (_, _) => const AppealScreen()),
       GoRoute(path: '/admin', builder: (_, _) => const AdminScreen()),

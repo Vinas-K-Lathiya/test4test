@@ -8,6 +8,7 @@ import '../../providers.dart';
 import '../../theme.dart';
 import '../../widgets/common.dart';
 import '../../widgets/labels.dart';
+import '../../widgets/ui.dart';
 
 class EventsTab extends ConsumerWidget {
   const EventsTab({super.key, required this.groupId});
@@ -16,22 +17,40 @@ class EventsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    return AsyncView(ref.watch(eventsProvider(groupId)), builder: (events) {
-      if (events.isEmpty) return EmptyState(icon: Icons.timeline_rounded, title: l.noActivity);
-      return ListView.builder(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
-        itemCount: events.length,
-        itemBuilder: (context, i) {
-          final e = events[i];
-          final (icon, color, text) = _describe(l, e);
-          return ListTile(
-            leading: CircleAvatar(backgroundColor: color.withValues(alpha: 0.12), child: Icon(icon, color: color, size: 20)),
-            title: Text(text),
-            subtitle: e.at == null ? null : Text(DateFormat.MMMd().add_jm().format(e.at!)),
-          );
-        },
-      );
-    });
+    return AsyncView(
+      ref.watch(eventsProvider(groupId)),
+      builder: (events) {
+        if (events.isEmpty) return EmptyState(image: 'calendar', title: l.noActivity);
+        return ListView.separated(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+          itemCount: events.length,
+          separatorBuilder: (_, _) => const SizedBox(height: 10),
+          itemBuilder: (context, i) {
+            final e = events[i];
+            final (_, color, text) = _describe(l, e);
+            return SoftCard(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  ImgTile(eventImage(e.type), size: 46, color: color),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(text, style: const TextStyle(fontWeight: FontWeight.w700)),
+                        if (e.at != null)
+                          Text(DateFormat.MMMd().add_jm().format(e.at!), style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   (IconData, Color, String) _describe(AppLocalizations l, GroupEvent e) {
@@ -43,7 +62,11 @@ class EventsTab extends ConsumerWidget {
       'started' => (Icons.flag_rounded, Brand.green, l.evStarted),
       'memberActive' => (Icons.check_circle_rounded, Brand.green, l.evMemberActive(name)),
       'warning' => (Icons.warning_amber_rounded, Brand.amber, l.evWarning(name)),
-      'removed' => (Icons.person_remove_rounded, Brand.red, l.evRemoved(name, removedReasonLabel(l, e.data['reason'] as String?))),
+      'removed' => (
+        Icons.person_remove_rounded,
+        Brand.red,
+        l.evRemoved(name, removedReasonLabel(l, e.data['reason'] as String?)),
+      ),
       'suspended' => (Icons.gavel_rounded, Brand.amber, l.evSuspended(name)),
       'reinstated' => (Icons.restore_rounded, Brand.green, l.evReinstated(name)),
       'completed' => (Icons.emoji_events_rounded, Brand.violet, l.evCompleted),

@@ -1179,4 +1179,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String appVersion(String version) {
     return 'Version $version';
   }
+
+  @override
+  String get welcomeBack => 'Great to see you back!';
+
+  @override
+  String get viewAll => 'View all';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get statusTesting => 'Testing';
+
+  @override
+  String get inQueueShort => 'In queue';
+
+  @override
+  String get statusReady => 'Ready';
+
+  @override
+  String get memberDone => 'Done';
+
+  @override
+  String get memberTesting => 'Testing';
+
+  @override
+  String get memberPending => 'Today';
+
+  @override
+  String get todaysTasks => 'Today\'s tasks';
+
+  @override
+  String tasksCompleted(int total, int done) {
+    return '$total apps · $done/$total completed';
+  }
+
+  @override
+  String groupMembersCount(int count) {
+    return 'Group members ($count)';
+  }
+
+  @override
+  String get recentActivity => 'Recent activity';
+
+  @override
+  String badgesEarned(int earned, int total) {
+    return '$earned of $total earned';
+  }
 }

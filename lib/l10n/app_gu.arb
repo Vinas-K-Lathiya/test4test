@@ -339,5 +339,20 @@
   "later": "પછી",
   "updateDownloaded": "અપડેટ ડાઉનલોડ થયું. ઇન્સ્ટોલ પૂરું કરવા રીસ્ટાર્ટ કરો.",
   "restart": "રીસ્ટાર્ટ",
-  "appVersion": "વર્ઝન {version}"
+  "appVersion": "વર્ઝન {version}",
+  "welcomeBack": "તમને ફરી જોઈને આનંદ થયો!",
+  "viewAll": "બધું જુઓ",
+  "more": "વધુ",
+  "filterAll": "બધી",
+  "statusTesting": "ટેસ્ટિંગ",
+  "inQueueShort": "કતારમાં",
+  "statusReady": "તૈયાર",
+  "memberDone": "પૂર્ણ",
+  "memberTesting": "ટેસ્ટિંગ",
+  "memberPending": "આજે બાકી",
+  "todaysTasks": "આજના કામ",
+  "tasksCompleted": "{total} એપ્સ · {done}/{total} પૂર્ણ",
+  "groupMembersCount": "ગ્રુપ સભ્યો ({count})",
+  "recentActivity": "તાજેતરની પ્રવૃત્તિ",
+  "badgesEarned": "{total} માંથી {earned} મળ્યા"
 }

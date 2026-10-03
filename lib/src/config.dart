@@ -25,8 +25,7 @@ class AppConfig {
   static const playStoreUrl = 'https://play.google.com/store/apps/details?id=$packageName';
 
   /// Firebase/GCP project number, used for Play Integrity (same as messagingSenderId).
-  static int get cloudProjectNumber =>
-      int.tryParse(DefaultFirebaseOptions.android.messagingSenderId) ?? 0;
+  static int get cloudProjectNumber => int.tryParse(DefaultFirebaseOptions.android.messagingSenderId) ?? 0;
 
   static const locales = ['en', 'hi', 'gu', 'mr', 'es', 'pt'];
   static const localeNames = {

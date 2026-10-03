@@ -33,12 +33,14 @@ class MessagingService {
     );
     await _local
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(const AndroidNotificationChannel(
-          channelId,
-          'Group updates',
-          description: 'Reminders, warnings, feedback and group changes',
-          importance: Importance.high,
-        ));
+        ?.createNotificationChannel(
+          const AndroidNotificationChannel(
+            channelId,
+            'Group updates',
+            description: 'Reminders, warnings, feedback and group changes',
+            importance: Importance.high,
+          ),
+        );
 
     final fm = FirebaseMessaging.instance;
     await fm.requestPermission();

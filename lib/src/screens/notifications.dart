@@ -8,6 +8,8 @@ import '../l10n.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
+import '../widgets/labels.dart';
+import '../widgets/ui.dart';
 
 /// In-app inbox of every notification the server sent (pushes can be missed or dismissed).
 class NotificationsScreen extends ConsumerWidget {
@@ -39,59 +41,67 @@ class NotificationsScreen extends ConsumerWidget {
             ),
         ],
       ),
-      body: AsyncView(ref.watch(inboxProvider), builder: (items) {
-        if (items.isEmpty) {
-          return EmptyState(
-            icon: Icons.notifications_none_rounded,
-            title: l.noNotifications,
-            body: l.noNotificationsBody,
-          );
-        }
-        return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(12, 8, 12, 32),
-          itemCount: items.length,
-          separatorBuilder: (_, _) => const SizedBox(height: 8),
-          itemBuilder: (context, i) {
-            final n = items[i];
-            final (icon, color) = _style(n.key);
-            return Dismissible(
-              key: ValueKey(n.id),
-              direction: DismissDirection.endToStart,
-              background: Container(
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 20),
-                decoration: BoxDecoration(color: Brand.red.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(18)),
-                child: const Icon(Icons.delete_outline_rounded, color: Brand.red),
-              ),
-              onDismissed: (_) => _inbox(uid!).doc(n.id).delete(),
-              child: Card(
-                color: n.read ? null : Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.35),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                  leading: CircleAvatar(
-                    backgroundColor: color.withValues(alpha: 0.14),
-                    child: Icon(icon, color: color, size: 20),
+      body: AsyncView(
+        ref.watch(inboxProvider),
+        builder: (items) {
+          if (items.isEmpty) {
+            return EmptyState(image: 'bell', title: l.noNotifications, body: l.noNotificationsBody);
+          }
+          return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
+            itemCount: items.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
+            itemBuilder: (context, i) {
+              final n = items[i];
+              final (_, color) = _style(n.key);
+              return Dismissible(
+                key: ValueKey(n.id),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 20),
+                  decoration: BoxDecoration(
+                    color: Brand.red.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                  title: Text(n.title, style: TextStyle(fontWeight: n.read ? FontWeight.w500 : FontWeight.w800)),
-                  subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    const SizedBox(height: 2),
-                    Text(n.body),
-                    if (n.at != null) ...[
-                      const SizedBox(height: 4),
-                      Text(_when(context, n.at!), style: Theme.of(context).textTheme.bodySmall),
-                    ],
-                  ]),
-                  trailing: n.read ? null : const StatusDot(Brand.indigo),
-                  onTap: () {
-                    if (!n.read) _inbox(uid!).doc(n.id).update({'read': true});
-                    if (n.groupId != null) context.push('/group/${n.groupId}');
-                  },
+                  child: const Icon(Icons.delete_outline_rounded, color: Brand.red),
                 ),
-              ),
-            );
-          },
-        );
-      }),
+                onDismissed: (_) => _inbox(uid!).doc(n.id).delete(),
+                child: SoftCard(
+                  padding: EdgeInsets.zero,
+                  color: n.read
+                      ? null
+                      : Color.alphaBlend(
+                          Brand.indigo.withValues(alpha: 0.06),
+                          Theme.of(context).cardTheme.color ?? Colors.white,
+                        ),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    leading: ImgTile(notificationImage(n.key), size: 48, color: color),
+                    title: Text(n.title, style: TextStyle(fontWeight: n.read ? FontWeight.w500 : FontWeight.w800)),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 2),
+                        Text(n.body),
+                        if (n.at != null) ...[
+                          const SizedBox(height: 4),
+                          Text(_when(context, n.at!), style: Theme.of(context).textTheme.bodySmall),
+                        ],
+                      ],
+                    ),
+                    trailing: n.read ? null : const StatusDot(Brand.indigo),
+                    onTap: () {
+                      if (!n.read) _inbox(uid!).doc(n.id).update({'read': true});
+                      if (n.groupId != null) context.push('/group/${n.groupId}');
+                    },
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -103,12 +113,12 @@ class NotificationsScreen extends ConsumerWidget {
   }
 
   (IconData, Color) _style(String key) => switch (key) {
-        'warning1' || 'warning2' || 'setupReminder' => (Icons.warning_amber_rounded, Brand.amber),
-        'kicked' || 'setupFailed' || 'suspended' || 'groupCancelled' => (Icons.error_outline_rounded, Brand.red),
-        'completed' => (Icons.emoji_events_rounded, Brand.violet),
-        'newFeedback' => (Icons.rate_review_rounded, Brand.teal),
-        'dailyReminder' => (Icons.alarm_rounded, Brand.indigo),
-        'reinstated' || 'testStarted' => (Icons.check_circle_rounded, Brand.green),
-        _ => (Icons.groups_rounded, Brand.indigo),
-      };
+    'warning1' || 'warning2' || 'setupReminder' => (Icons.warning_amber_rounded, Brand.amber),
+    'kicked' || 'setupFailed' || 'suspended' || 'groupCancelled' => (Icons.error_outline_rounded, Brand.red),
+    'completed' => (Icons.emoji_events_rounded, Brand.violet),
+    'newFeedback' => (Icons.rate_review_rounded, Brand.teal),
+    'dailyReminder' => (Icons.alarm_rounded, Brand.indigo),
+    'reinstated' || 'testStarted' => (Icons.check_circle_rounded, Brand.green),
+    _ => (Icons.groups_rounded, Brand.indigo),
+  };
 }

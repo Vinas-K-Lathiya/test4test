@@ -39,9 +39,7 @@ class UserAccount {
       strikes: _int(j['strikes']),
       banned: j['banned'] == true,
       locale: j['locale'] as String?,
-      notifications: {
-        for (final e in ((j['notifications'] as Map?) ?? {}).entries) e.key as String: e.value == true,
-      },
+      notifications: {for (final e in ((j['notifications'] as Map?) ?? {}).entries) e.key as String: e.value == true},
     );
   }
 }
@@ -184,15 +182,15 @@ class AppListing {
   static String optInUrlFor(String pkg) => 'https://play.google.com/apps/testing/$pkg';
 
   Json toJson() => {
-        'ownerUid': ownerUid,
-        'name': name,
-        'packageName': packageName,
-        'description': description,
-        'testNotes': testNotes,
-        'optInWebUrl': optInWebUrl,
-        'optInPlayUrl': optInPlayUrl,
-        'iconUrl': iconUrl,
-      };
+    'ownerUid': ownerUid,
+    'name': name,
+    'packageName': packageName,
+    'description': description,
+    'testNotes': testNotes,
+    'optInWebUrl': optInWebUrl,
+    'optInPlayUrl': optInPlayUrl,
+    'iconUrl': iconUrl,
+  };
 
   factory AppListing.fromDoc(DocumentSnapshot<Json> d) {
     final j = d.data() ?? {};
@@ -267,10 +265,7 @@ class Group {
     return Group(
       id: d.id,
       tier: j['tier'] as String? ?? 'starter',
-      status: GroupStatus.values.firstWhere(
-        (s) => s.name == j['status'],
-        orElse: () => GroupStatus.setup,
-      ),
+      status: GroupStatus.values.firstWhere((s) => s.name == j['status'], orElse: () => GroupStatus.setup),
       createdAt: _ts(j['createdAt']),
       setupDeadline: _ts(j['setupDeadline']),
       rosterVersion: _int(j['rosterVersion']),
@@ -487,7 +482,15 @@ class FeedbackItem {
 }
 
 class Appeal {
-  Appeal({required this.id, required this.uid, required this.email, required this.text, required this.status, required this.note, required this.createdAt});
+  Appeal({
+    required this.id,
+    required this.uid,
+    required this.email,
+    required this.text,
+    required this.status,
+    required this.note,
+    required this.createdAt,
+  });
   final String id;
   final String uid;
   final String email;

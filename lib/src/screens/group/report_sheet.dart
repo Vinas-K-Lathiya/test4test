@@ -47,7 +47,9 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
             .ref(path)
             .putData(await _shot!.readAsBytes(), SettableMetadata(contentType: 'image/jpeg'));
       }
-      await ref.read(apiProvider).submitReport(
+      await ref
+          .read(apiProvider)
+          .submitReport(
             groupId: widget.groupId,
             targetUid: widget.target.uid,
             reason: _reason,
@@ -65,37 +67,48 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(l.reportTitle(widget.target.displayName), style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 4),
-          Text(l.reportExplain, style: Theme.of(context).textTheme.bodySmall),
-          RadioGroup<String>(
-            groupValue: _reason,
-            onChanged: (v) => setState(() => _reason = v ?? _reason),
-            child: Column(children: [
-              for (final r in reportReasons)
-                RadioListTile<String>(value: r, title: Text(reportReasonLabel(l, r)), dense: true),
-            ]),
-          ),
-          TextField(
-            controller: _details,
-            maxLength: 1000,
-            maxLines: 3,
-            decoration: InputDecoration(labelText: l.detailsOptional),
-          ),
-          Row(children: [
-            OutlinedButton.icon(
-              icon: const Icon(Icons.image_outlined),
-              label: Text(_shot == null ? l.addScreenshot : l.screenshotAdded),
-              onPressed: () async {
-                final x = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1600, imageQuality: 80);
-                if (x != null) setState(() => _shot = x);
-              },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(l.reportTitle(widget.target.displayName), style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 4),
+            Text(l.reportExplain, style: Theme.of(context).textTheme.bodySmall),
+            RadioGroup<String>(
+              groupValue: _reason,
+              onChanged: (v) => setState(() => _reason = v ?? _reason),
+              child: Column(
+                children: [
+                  for (final r in reportReasons)
+                    RadioListTile<String>(value: r, title: Text(reportReasonLabel(l, r)), dense: true),
+                ],
+              ),
             ),
-            const Spacer(),
-            FilledButton(onPressed: _submit, child: Text(l.sendReport)),
-          ]),
-        ]),
+            TextField(
+              controller: _details,
+              maxLength: 1000,
+              maxLines: 3,
+              decoration: InputDecoration(labelText: l.detailsOptional),
+            ),
+            Row(
+              children: [
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.image_outlined),
+                  label: Text(_shot == null ? l.addScreenshot : l.screenshotAdded),
+                  onPressed: () async {
+                    final x = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                      maxWidth: 1600,
+                      imageQuality: 80,
+                    );
+                    if (x != null) setState(() => _shot = x);
+                  },
+                ),
+                const Spacer(),
+                FilledButton(onPressed: _submit, child: Text(l.sendReport)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

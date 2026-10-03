@@ -148,10 +148,7 @@ final queueEntryProvider = StreamProvider<QueueEntry?>((ref) {
 final queueStatsProvider = StreamProvider<Map<String, int>>((ref) {
   return _db.collection('stats').doc('queue').snapshots().map((d) {
     final j = d.data() ?? {};
-    return {
-      'starter': (j['starter'] as num?)?.toInt() ?? 0,
-      'trusted': (j['trusted'] as num?)?.toInt() ?? 0,
-    };
+    return {'starter': (j['starter'] as num?)?.toInt() ?? 0, 'trusted': (j['trusted'] as num?)?.toInt() ?? 0};
   });
 });
 
@@ -228,8 +225,11 @@ final myAppealsProvider = StreamProvider<List<Appeal>>((ref) {
       .collection('appeals')
       .where('uid', isEqualTo: uid)
       .snapshots()
-      .map((s) => s.docs.map(Appeal.fromDoc).toList()
-        ..sort((a, b) => (b.createdAt ?? DateTime(0)).compareTo(a.createdAt ?? DateTime(0))));
+      .map(
+        (s) =>
+            s.docs.map(Appeal.fromDoc).toList()
+              ..sort((a, b) => (b.createdAt ?? DateTime(0)).compareTo(a.createdAt ?? DateTime(0))),
+      );
 });
 
 final openReviewsProvider = StreamProvider<List<Review>>((ref) {

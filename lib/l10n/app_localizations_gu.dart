@@ -1165,4 +1165,55 @@ class AppLocalizationsGu extends AppLocalizations {
   String appVersion(String version) {
     return 'વર્ઝન $version';
   }
+
+  @override
+  String get welcomeBack => 'તમને ફરી જોઈને આનંદ થયો!';
+
+  @override
+  String get viewAll => 'બધું જુઓ';
+
+  @override
+  String get more => 'વધુ';
+
+  @override
+  String get filterAll => 'બધી';
+
+  @override
+  String get statusTesting => 'ટેસ્ટિંગ';
+
+  @override
+  String get inQueueShort => 'કતારમાં';
+
+  @override
+  String get statusReady => 'તૈયાર';
+
+  @override
+  String get memberDone => 'પૂર્ણ';
+
+  @override
+  String get memberTesting => 'ટેસ્ટિંગ';
+
+  @override
+  String get memberPending => 'આજે બાકી';
+
+  @override
+  String get todaysTasks => 'આજના કામ';
+
+  @override
+  String tasksCompleted(int total, int done) {
+    return '$total એપ્સ · $done/$total પૂર્ણ';
+  }
+
+  @override
+  String groupMembersCount(int count) {
+    return 'ગ્રુપ સભ્યો ($count)';
+  }
+
+  @override
+  String get recentActivity => 'તાજેતરની પ્રવૃત્તિ';
+
+  @override
+  String badgesEarned(int earned, int total) {
+    return '$total માંથી $earned મળ્યા';
+  }
 }

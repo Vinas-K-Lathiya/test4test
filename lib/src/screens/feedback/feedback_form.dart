@@ -40,7 +40,9 @@ class _FeedbackFormScreenState extends ConsumerState<FeedbackFormScreen> {
             .ref(path)
             .putData(await _shot!.readAsBytes(), SettableMetadata(contentType: 'image/jpeg'));
       }
-      await ref.read(apiProvider).submitFeedback(
+      await ref
+          .read(apiProvider)
+          .submitFeedback(
             groupId: widget.groupId,
             toUid: widget.toUid,
             rating: _rating,
@@ -61,47 +63,56 @@ class _FeedbackFormScreenState extends ConsumerState<FeedbackFormScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l.feedbackFor(app?.appName ?? ''))),
-      body: ListView(padding: const EdgeInsets.all(16), children: [
-        if (app != null && app.testNotes.isNotEmpty)
-          InfoCard(icon: Icons.lightbulb_outline_rounded, title: l.developerAsks, body: app.testNotes),
-        SectionTitle(l.rating),
-        Row(children: [
-          for (var i = 1; i <= 5; i++)
-            IconButton(
-              iconSize: 36,
-              onPressed: () => setState(() => _rating = i),
-              icon: Icon(i <= _rating ? Icons.star_rounded : Icons.star_outline_rounded, color: Brand.amber),
-            ),
-        ]),
-        SectionTitle(l.category),
-        Wrap(spacing: 8, runSpacing: 8, children: [
-          for (final c in feedbackCategories)
-            ChoiceChip(
-              label: Text(categoryLabel(l, c)),
-              selected: _category == c,
-              onSelected: (_) => setState(() => _category = c),
-            ),
-        ]),
-        SectionTitle(l.yourFeedback),
-        TextField(
-          controller: _text,
-          maxLines: 6,
-          maxLength: 2000,
-          onChanged: (_) => setState(() {}),
-          decoration: InputDecoration(hintText: l.feedbackHint, helperText: l.feedbackMin),
-        ),
-        const SizedBox(height: 8),
-        OutlinedButton.icon(
-          icon: const Icon(Icons.image_outlined),
-          label: Text(_shot == null ? l.addScreenshot : l.screenshotAdded),
-          onPressed: () async {
-            final x = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1600, imageQuality: 80);
-            if (x != null) setState(() => _shot = x);
-          },
-        ),
-        const SizedBox(height: 20),
-        FilledButton(onPressed: valid ? _submit : null, child: Text(l.sendFeedback)),
-      ]),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          if (app != null && app.testNotes.isNotEmpty)
+            InfoCard(image: 'bulb', title: l.developerAsks, body: app.testNotes),
+          SectionTitle(l.rating),
+          Row(
+            children: [
+              for (var i = 1; i <= 5; i++)
+                IconButton(
+                  iconSize: 36,
+                  onPressed: () => setState(() => _rating = i),
+                  icon: Icon(i <= _rating ? Icons.star_rounded : Icons.star_outline_rounded, color: Brand.amber),
+                ),
+            ],
+          ),
+          SectionTitle(l.category),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (final c in feedbackCategories)
+                ChoiceChip(
+                  label: Text(categoryLabel(l, c)),
+                  selected: _category == c,
+                  onSelected: (_) => setState(() => _category = c),
+                ),
+            ],
+          ),
+          SectionTitle(l.yourFeedback),
+          TextField(
+            controller: _text,
+            maxLines: 6,
+            maxLength: 2000,
+            onChanged: (_) => setState(() {}),
+            decoration: InputDecoration(hintText: l.feedbackHint, helperText: l.feedbackMin),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            icon: const Icon(Icons.image_outlined),
+            label: Text(_shot == null ? l.addScreenshot : l.screenshotAdded),
+            onPressed: () async {
+              final x = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 1600, imageQuality: 80);
+              if (x != null) setState(() => _shot = x);
+            },
+          ),
+          const SizedBox(height: 20),
+          FilledButton(onPressed: valid ? _submit : null, child: Text(l.sendFeedback)),
+        ],
+      ),
     );
   }
 }

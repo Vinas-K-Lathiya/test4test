@@ -69,7 +69,12 @@ class _AppFormScreenState extends ConsumerState<AppFormScreen> {
 
   Future<void> _pickIcon() async {
     final uid = ref.read(uidProvider)!;
-    final x = await ImagePicker().pickImage(source: ImageSource.gallery, maxWidth: 512, maxHeight: 512, imageQuality: 85);
+    final x = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 512,
+      maxHeight: 512,
+      imageQuality: 85,
+    );
     if (x == null || !mounted) return;
     await runAction(context, () async {
       final r = FirebaseStorage.instance.ref('uploads/$uid/icon_${DateTime.now().millisecondsSinceEpoch}.jpg');
@@ -111,57 +116,62 @@ class _AppFormScreenState extends ConsumerState<AppFormScreen> {
       appBar: AppBar(title: Text(widget.appId == null ? l.addApp : l.editApp)),
       body: Form(
         key: _form,
-        child: ListView(padding: const EdgeInsets.all(16), children: [
-          Center(
-            child: InkWell(
-              borderRadius: BorderRadius.circular(20),
-              onTap: _pickIcon,
-              child: Column(children: [
-                AppIconView(name: _name.text.isEmpty ? '+' : _name.text, url: _iconUrl, size: 80),
-                const SizedBox(height: 6),
-                Text(l.appIcon, style: Theme.of(context).textTheme.bodySmall),
-              ]),
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            Center(
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: _pickIcon,
+                child: Column(
+                  children: [
+                    AppIconView(name: _name.text.isEmpty ? '+' : _name.text, url: _iconUrl, size: 80),
+                    const SizedBox(height: 6),
+                    Text(l.appIcon, style: Theme.of(context).textTheme.bodySmall),
+                  ],
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          TextFormField(
-            controller: _name,
-            decoration: InputDecoration(labelText: l.appName),
-            maxLength: 50,
-            onChanged: (_) => setState(() {}),
-            validator: (v) => (v ?? '').trim().length < 2 ? l.required : null,
-          ),
-          TextFormField(
-            controller: _pkg,
-            decoration: InputDecoration(labelText: l.packageName, hintText: 'com.example.myapp'),
-            enabled: widget.appId == null,
-            validator: (v) => _pkgRe.hasMatch((v ?? '').trim()) ? null : l.invalidPackage,
-          ),
-          const SizedBox(height: 16),
-          TextFormField(
-            controller: _optIn,
-            decoration: InputDecoration(labelText: l.optInLink, helperText: l.optInHelp, helperMaxLines: 3),
-            keyboardType: TextInputType.url,
-            validator: (v) => _optInRe.hasMatch((v ?? '').trim()) ? null : l.invalidOptIn,
-          ),
-          const SizedBox(height: 16),
-          TextFormField(
-            controller: _desc,
-            decoration: InputDecoration(labelText: l.shortDescription),
-            maxLength: 300,
-            maxLines: 2,
-          ),
-          TextFormField(
-            controller: _notes,
-            decoration: InputDecoration(labelText: l.testNotes, helperText: l.testNotesHelp, helperMaxLines: 2),
-            maxLength: 1000,
-            maxLines: 4,
-          ),
-          const SizedBox(height: 8),
-          InfoCard(icon: Icons.lightbulb_outline_rounded, title: l.closedTestTipTitle, body: l.closedTestTipBody),
-          const SizedBox(height: 20),
-          FilledButton(onPressed: _save, child: Text(l.save)),
-        ]),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _name,
+              decoration: InputDecoration(labelText: l.appName),
+              maxLength: 50,
+              onChanged: (_) => setState(() {}),
+              validator: (v) => (v ?? '').trim().length < 2 ? l.required : null,
+            ),
+            TextFormField(
+              controller: _pkg,
+              decoration: InputDecoration(labelText: l.packageName, hintText: 'com.example.myapp'),
+              enabled: widget.appId == null,
+              validator: (v) => _pkgRe.hasMatch((v ?? '').trim()) ? null : l.invalidPackage,
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _optIn,
+              decoration: InputDecoration(labelText: l.optInLink, helperText: l.optInHelp, helperMaxLines: 3),
+              keyboardType: TextInputType.url,
+              validator: (v) => _optInRe.hasMatch((v ?? '').trim()) ? null : l.invalidOptIn,
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _desc,
+              decoration: InputDecoration(labelText: l.shortDescription),
+              maxLength: 300,
+              maxLines: 2,
+            ),
+            TextFormField(
+              controller: _notes,
+              decoration: InputDecoration(labelText: l.testNotes, helperText: l.testNotesHelp, helperMaxLines: 2),
+              maxLength: 1000,
+              maxLines: 4,
+            ),
+            const SizedBox(height: 8),
+            InfoCard(image: 'bulb', title: l.closedTestTipTitle, body: l.closedTestTipBody),
+            const SizedBox(height: 20),
+            FilledButton(onPressed: _save, child: Text(l.save)),
+          ],
+        ),
       ),
     );
   }

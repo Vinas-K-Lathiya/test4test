@@ -667,5 +667,47 @@
         "type": "String"
       }
     }
+  },
+  "welcomeBack": "Great to see you back!",
+  "viewAll": "View all",
+  "more": "More",
+  "filterAll": "All",
+  "statusTesting": "Testing",
+  "inQueueShort": "In queue",
+  "statusReady": "Ready",
+  "memberDone": "Done",
+  "memberTesting": "Testing",
+  "memberPending": "Today",
+  "todaysTasks": "Today's tasks",
+  "tasksCompleted": "{total} apps · {done}/{total} completed",
+  "@tasksCompleted": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "done": {
+        "type": "int"
+      }
+    }
+  },
+  "groupMembersCount": "Group members ({count})",
+  "@groupMembersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "recentActivity": "Recent activity",
+  "badgesEarned": "{earned} of {total} earned",
+  "@badgesEarned": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
   }
 }

@@ -13,8 +13,5 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final prefs = await SharedPreferences.getInstance();
   await scheduleBackgroundSync();
-  runApp(ProviderScope(
-    overrides: [prefsProvider.overrideWithValue(prefs)],
-    child: const TestPactApp(),
-  ));
+  runApp(ProviderScope(overrides: [prefsProvider.overrideWithValue(prefs)], child: const TestPactApp()));
 }

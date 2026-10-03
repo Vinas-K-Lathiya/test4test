@@ -197,4 +197,13 @@ T = {
   "updateNow": "Atualizar agora", "later": "Mais tarde",
   "updateDownloaded": "Atualização baixada. Reinicie para concluir a instalação.", "restart": "Reiniciar",
   "appVersion": "Versão {version}",
+
+  "welcomeBack": "Que bom ver você de novo!", "viewAll": "Ver tudo", "more": "Mais",
+  "filterAll": "Todos", "statusTesting": "Em teste", "inQueueShort": "Na fila", "statusReady": "Pronto",
+  "memberDone": "Feito", "memberTesting": "Testando", "memberPending": "Pendente",
+  "todaysTasks": "Tarefas de hoje",
+  "tasksCompleted": "{total} apps · {done}/{total} concluídos",
+  "groupMembersCount": "Membros do grupo ({count})",
+  "recentActivity": "Atividade recente",
+  "badgesEarned": "{earned} de {total} conquistados",
 }
