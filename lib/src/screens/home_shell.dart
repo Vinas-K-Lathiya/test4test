@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../ads/ad_widgets.dart';
+import '../ads/ads_service.dart';
 import '../l10n.dart';
 import '../providers.dart';
 import '../router.dart';
@@ -33,6 +35,22 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         if (mounted) setState(() => _bootstrapError = e);
       });
     });
+  }
+
+  AppOpenAdObserver? _appOpenObserver;
+
+  void _startAds() {
+    if (_appOpenObserver != null) return;
+    final ads = ref.read(adsServiceProvider);
+    _appOpenObserver = AppOpenAdObserver(ads);
+    WidgetsBinding.instance.addObserver(_appOpenObserver!);
+    ads.start();
+  }
+
+  @override
+  void dispose() {
+    if (_appOpenObserver != null) WidgetsBinding.instance.removeObserver(_appOpenObserver!);
+    super.dispose();
   }
 
   void _startMessaging() {
@@ -73,6 +91,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
       );
     }
     _startMessaging();
+    _startAds();
 
     final isAdmin = ref.watch(isAdminProvider);
     final unread = ref.watch(unreadCountProvider);
@@ -120,7 +139,18 @@ class _HomeShellState extends ConsumerState<HomeShell> {
           const SizedBox(width: 8),
         ],
       ),
-      body: IndexedStack(index: _tab, children: const [DashboardTab(), MyAppsTab(), FeedbackTab(), MyProfileTab()]),
+      body: Column(
+        children: [
+          Expanded(
+            child: IndexedStack(
+              index: _tab,
+              children: const [DashboardTab(), MyAppsTab(), FeedbackTab(), MyProfileTab()],
+            ),
+          ),
+          // One small banner, only on the My apps tab.
+          if (_tab == 1) const BannerAdSlot(),
+        ],
+      ),
       floatingActionButton: _tab == 1
           ? Container(
               decoration: BoxDecoration(

@@ -354,5 +354,19 @@
   "tasksCompleted": "{total} apps · {done}/{total} concluídos",
   "groupMembersCount": "Membros do grupo ({count})",
   "recentActivity": "Atividade recente",
-  "badgesEarned": "{earned} de {total} conquistados"
+  "badgesEarned": "{earned} de {total} conquistados",
+  "adLabel": "Anúncio",
+  "privateDnsTitle": "Desative o DNS privado",
+  "privateDnsBody": "O TestPact é gratuito graças a alguns anúncios pequenos. Seu DNS privado os bloqueia, então desative-o para continuar usando o app.",
+  "privateDnsStep1": "Abra Configurações → Rede e internet (ou Conexões → Mais configurações de conexão)",
+  "privateDnsStep2": "Toque em DNS privado",
+  "privateDnsStep3": "Escolha Desativado ou Automático e volte aqui",
+  "privateDnsDone": "Já desativei",
+  "adsSection": "Anúncios",
+  "removeAdsTitle": "Sem anúncios por 24 horas",
+  "removeAdsBody": "Assista a um vídeo curto para esconder todos os anúncios por um dia",
+  "adFreeUntil": "Sem anúncios até {time}",
+  "adFreeGranted": "Obrigado! Sem anúncios nas próximas 24 horas.",
+  "adNotAvailable": "Nenhum vídeo disponível agora. Tente mais tarde.",
+  "adPrivacyOptions": "Opções de privacidade de anúncios"
 }

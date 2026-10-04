@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../ads/ad_widgets.dart';
 import '../config.dart';
 import '../l10n.dart';
 import '../models.dart';
@@ -53,6 +54,7 @@ class DashboardTab extends ConsumerWidget {
             action: TextButton(onPressed: () => context.push('/appeal'), child: Text(l.appeal)),
           ),
         ],
+        const NativeAdCard(padding: EdgeInsets.only(top: 18)),
         SectionHeader(l.howItWorks),
         ..._steps(l).indexed.expand(
           (e) => [StepRow(number: e.$1 + 1, image: e.$2.$1, title: e.$2.$2, body: e.$2.$3), const SizedBox(height: 10)],

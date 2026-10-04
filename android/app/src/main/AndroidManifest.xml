@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Lets the user grant "Usage access" so we can measure time spent ONLY in the apps assigned
          to them in their group. Special-access permission: the user turns it on in system settings. -->
@@ -33,6 +34,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- AdMob app ID -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6123927127117956~8215108263" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="testpact_default" />

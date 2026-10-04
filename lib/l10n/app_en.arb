@@ -709,5 +709,26 @@
         "type": "int"
       }
     }
-  }
+  },
+  "adLabel": "Ad",
+  "privateDnsTitle": "Turn off Private DNS",
+  "privateDnsBody": "TestPact is free because of a few small ads. Your Private DNS blocks them, so please turn it off to keep using the app.",
+  "privateDnsStep1": "Open Settings → Network & internet (or Connections → More connection settings)",
+  "privateDnsStep2": "Tap Private DNS",
+  "privateDnsStep3": "Choose Off or Automatic, then come back here",
+  "privateDnsDone": "I turned it off",
+  "adsSection": "Ads",
+  "removeAdsTitle": "No ads for 24 hours",
+  "removeAdsBody": "Watch one short video to hide all ads for a day",
+  "adFreeUntil": "Ad-free until {time}",
+  "@adFreeUntil": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "adFreeGranted": "Thanks! No ads for the next 24 hours.",
+  "adNotAvailable": "No video available right now. Please try again later.",
+  "adPrivacyOptions": "Ad privacy choices"
 }

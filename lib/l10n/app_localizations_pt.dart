@@ -1236,4 +1236,52 @@ class AppLocalizationsPt extends AppLocalizations {
   String badgesEarned(int earned, int total) {
     return '$earned de $total conquistados';
   }
+
+  @override
+  String get adLabel => 'Anúncio';
+
+  @override
+  String get privateDnsTitle => 'Desative o DNS privado';
+
+  @override
+  String get privateDnsBody =>
+      'O TestPact é gratuito graças a alguns anúncios pequenos. Seu DNS privado os bloqueia, então desative-o para continuar usando o app.';
+
+  @override
+  String get privateDnsStep1 =>
+      'Abra Configurações → Rede e internet (ou Conexões → Mais configurações de conexão)';
+
+  @override
+  String get privateDnsStep2 => 'Toque em DNS privado';
+
+  @override
+  String get privateDnsStep3 => 'Escolha Desativado ou Automático e volte aqui';
+
+  @override
+  String get privateDnsDone => 'Já desativei';
+
+  @override
+  String get adsSection => 'Anúncios';
+
+  @override
+  String get removeAdsTitle => 'Sem anúncios por 24 horas';
+
+  @override
+  String get removeAdsBody =>
+      'Assista a um vídeo curto para esconder todos os anúncios por um dia';
+
+  @override
+  String adFreeUntil(String time) {
+    return 'Sem anúncios até $time';
+  }
+
+  @override
+  String get adFreeGranted => 'Obrigado! Sem anúncios nas próximas 24 horas.';
+
+  @override
+  String get adNotAvailable =>
+      'Nenhum vídeo disponível agora. Tente mais tarde.';
+
+  @override
+  String get adPrivacyOptions => 'Opções de privacidade de anúncios';
 }

@@ -1230,4 +1230,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String badgesEarned(int earned, int total) {
     return '$earned of $total earned';
   }
+
+  @override
+  String get adLabel => 'Ad';
+
+  @override
+  String get privateDnsTitle => 'Turn off Private DNS';
+
+  @override
+  String get privateDnsBody =>
+      'TestPact is free because of a few small ads. Your Private DNS blocks them, so please turn it off to keep using the app.';
+
+  @override
+  String get privateDnsStep1 =>
+      'Open Settings → Network & internet (or Connections → More connection settings)';
+
+  @override
+  String get privateDnsStep2 => 'Tap Private DNS';
+
+  @override
+  String get privateDnsStep3 => 'Choose Off or Automatic, then come back here';
+
+  @override
+  String get privateDnsDone => 'I turned it off';
+
+  @override
+  String get adsSection => 'Ads';
+
+  @override
+  String get removeAdsTitle => 'No ads for 24 hours';
+
+  @override
+  String get removeAdsBody => 'Watch one short video to hide all ads for a day';
+
+  @override
+  String adFreeUntil(String time) {
+    return 'Ad-free until $time';
+  }
+
+  @override
+  String get adFreeGranted => 'Thanks! No ads for the next 24 hours.';
+
+  @override
+  String get adNotAvailable =>
+      'No video available right now. Please try again later.';
+
+  @override
+  String get adPrivacyOptions => 'Ad privacy choices';
 }

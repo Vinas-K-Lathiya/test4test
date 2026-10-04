@@ -17,6 +17,7 @@ class UserAccount {
     required this.banned,
     required this.locale,
     this.notifications = const {},
+    this.createdAt,
   });
 
   final String uid;
@@ -29,6 +30,8 @@ class UserAccount {
   /// Per-category push settings: daily, group, feedback. Missing = on.
   final Map<String, bool> notifications;
   bool notifyFor(String category) => notifications[category] ?? true;
+
+  final DateTime? createdAt;
 
   factory UserAccount.fromDoc(DocumentSnapshot<Json> d) {
     final j = d.data() ?? {};

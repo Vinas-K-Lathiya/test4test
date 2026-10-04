@@ -28,6 +28,15 @@ class DeviceBridge {
 
   Future<void> openUsageAccessSettings() => _ch.invokeMethod('openUsageAccessSettings');
 
+  /// Private DNS state. `server` is set only when the user picked a specific provider hostname.
+  Future<({bool active, String? server, String? mode})> privateDns() async {
+    final r = await _ch.invokeMapMethod<String, dynamic>('privateDns') ?? const {};
+    return (active: r['active'] == true, server: r['server'] as String?, mode: r['mode'] as String?);
+  }
+
+  /// Opens Network & internet settings (where Private DNS lives).
+  Future<void> openNetworkSettings() => _ch.invokeMethod('openNetworkSettings');
+
   /// Opens Android's notification settings page for this app.
   Future<void> openNotificationSettings() => _ch.invokeMethod('openNotificationSettings');
 

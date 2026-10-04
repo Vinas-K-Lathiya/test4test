@@ -1219,4 +1219,52 @@ class AppLocalizationsHi extends AppLocalizations {
   String badgesEarned(int earned, int total) {
     return '$total में से $earned मिले';
   }
+
+  @override
+  String get adLabel => 'विज्ञापन';
+
+  @override
+  String get privateDnsTitle => 'Private DNS बंद करें';
+
+  @override
+  String get privateDnsBody =>
+      'TestPact कुछ छोटे विज्ञापनों की वजह से मुफ़्त है। आपका Private DNS उन्हें ब्लॉक करता है, इसलिए ऐप इस्तेमाल करते रहने के लिए कृपया इसे बंद करें।';
+
+  @override
+  String get privateDnsStep1 =>
+      'Settings → Network & internet (या Connections → More connection settings) खोलें';
+
+  @override
+  String get privateDnsStep2 => 'Private DNS पर टैप करें';
+
+  @override
+  String get privateDnsStep3 => 'Off या Automatic चुनें, फिर यहां वापस आएं';
+
+  @override
+  String get privateDnsDone => 'मैंने बंद कर दिया';
+
+  @override
+  String get adsSection => 'विज्ञापन';
+
+  @override
+  String get removeAdsTitle => '24 घंटे के लिए कोई विज्ञापन नहीं';
+
+  @override
+  String get removeAdsBody =>
+      'एक छोटा वीडियो देखें और पूरे दिन विज्ञापन छिपाएं';
+
+  @override
+  String adFreeUntil(String time) {
+    return '$time तक विज्ञापन-मुक्त';
+  }
+
+  @override
+  String get adFreeGranted => 'धन्यवाद! अगले 24 घंटे कोई विज्ञापन नहीं।';
+
+  @override
+  String get adNotAvailable =>
+      'अभी कोई वीडियो उपलब्ध नहीं है। कृपया बाद में कोशिश करें।';
+
+  @override
+  String get adPrivacyOptions => 'विज्ञापन प्राइवेसी विकल्प';
 }

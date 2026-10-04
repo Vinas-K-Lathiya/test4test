@@ -8,6 +8,7 @@ import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Process
 import android.provider.Settings
@@ -68,6 +69,31 @@ class DeviceBridgePlugin : FlutterPlugin, MethodChannel.MethodCallHandler {
                 "openUsageAccessSettings" -> {
                     val i = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    ctx.startActivity(i)
+                    result.success(true)
+                }
+                "privateDns" -> {
+                    // Android 9+: hostname is non-null only in "Private DNS provider hostname" mode.
+                    var active = false
+                    var server: String? = null
+                    if (Build.VERSION.SDK_INT >= 28) {
+                        val cm = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                        val lp = cm.getLinkProperties(cm.activeNetwork)
+                        active = lp?.isPrivateDnsActive == true
+                        server = lp?.privateDnsServerName
+                    }
+                    // The global setting reflects the user's choice even when no network is up.
+                    val mode = try {
+                        Settings.Global.getString(ctx.contentResolver, "private_dns_mode")
+                    } catch (e: Exception) { null }
+                    val specifier = try {
+                        Settings.Global.getString(ctx.contentResolver, "private_dns_specifier")
+                    } catch (e: Exception) { null }
+                    if (server == null && mode == "hostname" && !specifier.isNullOrBlank()) server = specifier
+                    result.success(mapOf("active" to active, "server" to server, "mode" to mode))
+                }
+                "openNetworkSettings" -> {
+                    val i = Intent(Settings.ACTION_WIRELESS_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     ctx.startActivity(i)
                     result.success(true)
                 }

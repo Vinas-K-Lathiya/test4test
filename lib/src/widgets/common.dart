@@ -16,8 +16,14 @@ class AppAvatar extends StatelessWidget {
   final double size;
 
   static const _palette = [
-    Color(0xFF6366F1), Color(0xFF8B5CF6), Color(0xFFEC4899), Color(0xFFF59E0B),
-    Color(0xFF10B981), Color(0xFF0EA5E9), Color(0xFFEF4444), Color(0xFF14B8A6),
+    Color(0xFF6366F1),
+    Color(0xFF8B5CF6),
+    Color(0xFFEC4899),
+    Color(0xFFF59E0B),
+    Color(0xFF10B981),
+    Color(0xFF0EA5E9),
+    Color(0xFFEF4444),
+    Color(0xFF14B8A6),
   ];
 
   @override
@@ -28,8 +34,10 @@ class AppAvatar extends StatelessWidget {
       radius: size / 2,
       backgroundColor: c,
       foregroundImage: url != null && url!.isNotEmpty ? NetworkImage(url!) : null,
-      child: Text(initials,
-          style: TextStyle(fontSize: size * 0.42, fontWeight: FontWeight.w800, color: Colors.white)),
+      child: Text(
+        initials,
+        style: TextStyle(fontSize: size * 0.42, fontWeight: FontWeight.w800, color: Colors.white),
+      ),
     );
   }
 }

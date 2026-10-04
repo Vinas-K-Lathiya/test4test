@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../ads/ads_service.dart';
 import '../../l10n.dart';
 import '../../providers.dart';
 import '../../theme.dart';
@@ -51,7 +52,12 @@ class _FeedbackFormScreenState extends ConsumerState<FeedbackFormScreen> {
             screenshotPath: path,
           );
     }, success: context.l10n.feedbackSent);
-    if (ok && mounted) context.pop();
+    if (ok && mounted) {
+      final ads = ref.read(adsServiceProvider);
+      context.pop();
+      // A natural break: the user just finished a task. Capped inside the service.
+      ads.maybeShowInterstitial();
+    }
   }
 
   @override

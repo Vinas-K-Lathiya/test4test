@@ -3,7 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../ads/ads_service.dart';
 import '../config.dart';
+
+import 'package:intl/intl.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -124,6 +127,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> with WidgetsBin
               ],
             ),
           ),
+          const _AdsSection(),
           SectionTitle(l.notificationSettings),
           const _NotificationSettings(),
           SectionTitle(l.about),
@@ -234,6 +238,69 @@ class _NotificationSettings extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _AdsSection extends ConsumerStatefulWidget {
+  const _AdsSection();
+  @override
+  ConsumerState<_AdsSection> createState() => _AdsSectionState();
+}
+
+class _AdsSectionState extends ConsumerState<_AdsSection> {
+  bool _privacyRequired = false;
+
+  @override
+  void initState() {
+    super.initState();
+    ref
+        .read(adsServiceProvider)
+        .privacyOptionsRequired()
+        .then((v) {
+          if (mounted) setState(() => _privacyRequired = v);
+        })
+        .catchError((_) {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final eligible = ref.watch(adsEligibleProvider);
+    final adFree = ref.watch(adFreeUntilProvider);
+    if (!eligible && !_privacyRequired) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionTitle(l.adsSection),
+        Card(
+          child: Column(
+            children: [
+              if (eligible)
+                ListTile(
+                  leading: const Icon(Icons.play_circle_outline_rounded, color: Brand.indigo),
+                  title: Text(
+                    adFree == null ? l.removeAdsTitle : l.adFreeUntil(DateFormat.MMMd().add_jm().format(adFree)),
+                  ),
+                  subtitle: adFree == null ? Text(l.removeAdsBody) : null,
+                  onTap: adFree != null
+                      ? null
+                      : () async {
+                          final messenger = ScaffoldMessenger.of(context);
+                          final ok = await ref.read(adsServiceProvider).watchForAdFree();
+                          messenger.showSnackBar(SnackBar(content: Text(ok ? l.adFreeGranted : l.adNotAvailable)));
+                        },
+                ),
+              if (_privacyRequired)
+                ListTile(
+                  leading: const Icon(Icons.privacy_tip_outlined),
+                  title: Text(l.adPrivacyOptions),
+                  onTap: () => ref.read(adsServiceProvider).showPrivacyOptions(),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

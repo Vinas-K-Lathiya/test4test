@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../ads/ad_widgets.dart';
 import '../../l10n.dart';
 import '../../models.dart';
 import '../../providers.dart';
@@ -97,6 +98,7 @@ class GroupScreen extends ConsumerWidget {
                 Expanded(child: TabBarView(children: [for (final t in tabs) t.$2])),
               ],
             ),
+            bottomNavigationBar: const SafeArea(top: false, child: BannerAdSlot()),
           ),
         );
       },

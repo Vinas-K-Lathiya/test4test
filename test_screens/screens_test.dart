@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:testpact/l10n/app_localizations.dart';
+import 'package:testpact/src/ads/ads_service.dart';
 import 'package:testpact/src/models.dart';
 import 'package:testpact/src/providers.dart';
 import 'package:testpact/src/screens/dashboard.dart';
@@ -100,6 +101,8 @@ List<Override> overrides({bool inGroup = true}) => [
             TrustLogEntry(delta: -5, reason: 'missed_day', score: 38, at: DateTime(2026, 9, 27, 0, 20)),
           ])),
       activitySyncProvider.overrideWithValue(FakeSync()),
+      adsActiveProvider.overrideWithValue(false),
+      adsEligibleProvider.overrideWithValue(false),
     ];
 
 Widget frame({required Widget child, String? title, int tab = 0, bool logo = false}) => Scaffold(

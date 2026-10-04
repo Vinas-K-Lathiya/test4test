@@ -2235,6 +2235,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{earned} of {total} earned'**
   String badgesEarned(int earned, int total);
+
+  /// No description provided for @adLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad'**
+  String get adLabel;
+
+  /// No description provided for @privateDnsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off Private DNS'**
+  String get privateDnsTitle;
+
+  /// No description provided for @privateDnsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'TestPact is free because of a few small ads. Your Private DNS blocks them, so please turn it off to keep using the app.'**
+  String get privateDnsBody;
+
+  /// No description provided for @privateDnsStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings → Network & internet (or Connections → More connection settings)'**
+  String get privateDnsStep1;
+
+  /// No description provided for @privateDnsStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Private DNS'**
+  String get privateDnsStep2;
+
+  /// No description provided for @privateDnsStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Off or Automatic, then come back here'**
+  String get privateDnsStep3;
+
+  /// No description provided for @privateDnsDone.
+  ///
+  /// In en, this message translates to:
+  /// **'I turned it off'**
+  String get privateDnsDone;
+
+  /// No description provided for @adsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads'**
+  String get adsSection;
+
+  /// No description provided for @removeAdsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No ads for 24 hours'**
+  String get removeAdsTitle;
+
+  /// No description provided for @removeAdsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch one short video to hide all ads for a day'**
+  String get removeAdsBody;
+
+  /// No description provided for @adFreeUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad-free until {time}'**
+  String adFreeUntil(String time);
+
+  /// No description provided for @adFreeGranted.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks! No ads for the next 24 hours.'**
+  String get adFreeGranted;
+
+  /// No description provided for @adNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No video available right now. Please try again later.'**
+  String get adNotAvailable;
+
+  /// No description provided for @adPrivacyOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad privacy choices'**
+  String get adPrivacyOptions;
 }
 
 class _AppLocalizationsDelegate
