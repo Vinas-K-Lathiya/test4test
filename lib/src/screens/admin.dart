@@ -537,8 +537,10 @@ class _AdsDiagnosticsState extends ConsumerState<_AdsDiagnostics> {
               'Account created',
               created == null ? 'unknown' : '${DateFormat.yMMMd().add_jm().format(created)} (${age!.inHours}h ago)',
             ),
-            _row('Ads wait', '${cfg?.afterDays ?? 2} days · remote enabled: ${cfg?.enabled ?? true}'),
-            _row('Eligible / active', '$eligible / $active', color: active ? Brand.green : Brand.red),
+            _row('Full-screen wait', '${cfg?.afterDays ?? 2} days · remote enabled: ${cfg?.enabled ?? true}'),
+            _row('Banner + native', '${ref.watch(inlineAdsActiveProvider)}',
+              color: ref.watch(inlineAdsActiveProvider) ? Brand.green : Brand.red),
+          _row('Full-screen ads', 'eligible $eligible / active $active', color: active ? Brand.green : Brand.red),
             if (adFree != null) _row('Ad-free until', DateFormat.MMMd().add_jm().format(adFree)),
             _row('Consent', '${ads.consentStatus}${ads.consentError == null ? '' : ' · ${ads.consentError}'}'),
             _row(

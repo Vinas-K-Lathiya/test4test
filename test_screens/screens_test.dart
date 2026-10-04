@@ -102,6 +102,7 @@ List<Override> overrides({bool inGroup = true}) => [
           ])),
       activitySyncProvider.overrideWithValue(FakeSync()),
       adsActiveProvider.overrideWithValue(false),
+      inlineAdsActiveProvider.overrideWithValue(false),
       adsEligibleProvider.overrideWithValue(false),
     ];
 

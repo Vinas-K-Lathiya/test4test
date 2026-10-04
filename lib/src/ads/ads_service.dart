@@ -11,7 +11,8 @@ import '../providers.dart';
 import 'ad_ids.dart';
 
 /// Remote switches in Firestore config/app:
-///   adsEnabled (bool, default true), adsAfterDays (int, default 2).
+///   adsEnabled (bool, default true),
+///   adsAfterDays (int, default 2): wait before full-screen ads; banner/native show from day one.
 class AdsConfig {
   const AdsConfig({required this.enabled, required this.afterDays});
   final bool enabled;
@@ -47,9 +48,17 @@ final adFreeUntilProvider = NotifierProvider<AdFreeController, DateTime?>(AdFree
 
 /// True when this user should see ads right now: enabled remotely, the account is older than
 /// [AdsConfig.afterDays], and no active ad-free reward.
+/// Full-screen ads (interstitial, app open, rewarded): only after the account's waiting period.
 final adsActiveProvider = Provider<bool>((ref) {
   if (ref.watch(adFreeUntilProvider) != null) return false;
   return ref.watch(adsEligibleProvider);
+});
+
+/// Banner + native ads: from day one for every signed-in user (unless ad-free or switched off).
+final inlineAdsActiveProvider = Provider<bool>((ref) {
+  final cfg = ref.watch(adsConfigProvider).value ?? const AdsConfig(enabled: true, afterDays: 2);
+  if (!cfg.enabled || ref.watch(adFreeUntilProvider) != null) return false;
+  return ref.watch(accountProvider).value != null;
 });
 
 /// Admin-only switch (Admin → Test → diagnostics) to see ads immediately, skipping the wait.

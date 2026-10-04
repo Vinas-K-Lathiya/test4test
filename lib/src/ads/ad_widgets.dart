@@ -7,13 +7,13 @@ import '../theme.dart';
 import 'ad_ids.dart';
 import 'ads_service.dart';
 
-/// Builds [child] only when ads are active for this user and the SDK is ready.
+/// Builds [child] only when inline ads (banner/native) are on and the SDK is ready.
 class _WhenAds extends ConsumerWidget {
   const _WhenAds({required this.builder});
   final WidgetBuilder builder;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (!ref.watch(adsActiveProvider)) return const SizedBox.shrink();
+    if (!ref.watch(inlineAdsActiveProvider)) return const SizedBox.shrink();
     final ads = ref.watch(adsServiceProvider);
     return ValueListenableBuilder<bool>(
       valueListenable: ads.readyNotifier,
