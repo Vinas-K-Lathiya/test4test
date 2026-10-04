@@ -2,6 +2,9 @@
 //   flutter test test_screens/screens_test.dart --update-goldens
 // Output: test_screens/goldens/*.png
 import 'dart:io';
+import 'dart:ui' as ui;
+
+import 'package:flutter/rendering.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -134,6 +137,8 @@ Widget frame({required Widget child, String? title, int tab = 0, bool logo = fal
     );
 
 Future<void> shot(WidgetTester tester, String name, Widget screen, {List<Override>? ov, double h = 915}) async {
+  // STORE=1 renders 9:16 frames for Play Store screenshots.
+  if (Platform.environment['STORE'] == '1') h = 732;
   tester.view.physicalSize = Size(412 * 3, h * 3);
   tester.view.devicePixelRatio = 3;
   final key = GlobalKey();
@@ -165,6 +170,18 @@ Future<void> shot(WidgetTester tester, String name, Widget screen, {List<Overrid
     });
   }
   await tester.pump(const Duration(seconds: 1));
+  if (Platform.environment['STORE'] == '1') {
+    // High-resolution capture (3x) for Play Store screenshots.
+    final boundary = key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
+    await tester.runAsync(() async {
+      final img = await boundary.toImage(pixelRatio: 3);
+      final png = await img.toByteData(format: ui.ImageByteFormat.png);
+      File('test_screens/store/$name.png')
+        ..createSync(recursive: true)
+        ..writeAsBytesSync(png!.buffer.asUint8List());
+    });
+    return;
+  }
   await expectLater(find.byKey(key), matchesGoldenFile('goldens/$name.png'));
 }
 

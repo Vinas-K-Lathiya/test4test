@@ -11,7 +11,7 @@ Your developer account is personal, so TestPact itself needs **12+ testers opted
 
 ## Store listing
 
-**App name:** TestPact: Closed Testing Groups
+**App name (max 30 chars):** TestPact: App Testing Groups
 
 **Short description (80 max):**
 Team up with developers to get 12+ real testers for Google Play closed testing
@@ -52,7 +52,7 @@ TestPact is an independent community tool and is not affiliated with Google.
 **Graphics** (in `assets/branding/`):
 - App icon 512×512: `play_icon_512.png`
 - Feature graphic 1024×500: `feature_graphic.png`
-- Phone screenshots (2–8): take them on your phone from Sign-in, Home, Group → Today, Group → Members, Profile, Feedback.
+- Phone screenshots: `assets/store/screenshot_1.png` … `screenshot_6.png` (1080×1920, ready to upload)
 
 ## App content answers
 
