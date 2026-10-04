@@ -43,8 +43,8 @@ final blockingPrivateDnsProvider = FutureProvider<String?>((ref) async {
   }
 });
 
-/// Once ads are active for a user (after 2 days), a Private DNS provider that blocks ads must be
-/// turned off. Rechecks every time the app comes back to the foreground.
+/// For every signed-in user, a Private DNS provider that blocks ads must be turned off.
+/// Rechecks every time the app comes back to the foreground.
 class PrivateDnsGate extends ConsumerStatefulWidget {
   const PrivateDnsGate({super.key, required this.child});
   final Widget child;
@@ -81,7 +81,8 @@ class _PrivateDnsGateState extends ConsumerState<PrivateDnsGate> with WidgetsBin
 
   @override
   Widget build(BuildContext context) {
-    if (!ref.watch(adsEligibleProvider)) return widget.child;
+    final cfg = ref.watch(adsConfigProvider).value;
+    if (ref.watch(accountProvider).value == null || cfg?.enabled == false) return widget.child;
     final host = ref.watch(blockingPrivateDnsProvider).value;
     if (host == null) return widget.child;
 

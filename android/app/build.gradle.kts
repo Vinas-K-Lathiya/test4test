@@ -29,7 +29,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.vlathiya.testpact"
+        applicationId = "com.fffmv.free_fire_game1"
         minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

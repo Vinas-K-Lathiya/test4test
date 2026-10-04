@@ -1,14 +1,21 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../ads/ad_ids.dart';
+import '../ads/ads_service.dart';
+import '../ads/private_dns_gate.dart';
 import '../l10n.dart';
 import '../models.dart';
 import '../providers.dart';
 import '../theme.dart';
 import '../widgets/common.dart';
 import '../widgets/labels.dart';
+import '../widgets/ui.dart';
 
 /// Admin tools: review suspended members, resolve appeals, find/ban users, adjust trust.
 class AdminScreen extends ConsumerWidget {
@@ -450,6 +457,136 @@ class _TestTools extends ConsumerWidget {
             ),
         ],
       ],
+    );
+  }
+}
+
+/// Shows exactly why ads / the Private DNS screen are or aren't appearing on this phone.
+class _AdsDiagnostics extends ConsumerStatefulWidget {
+  const _AdsDiagnostics();
+  @override
+  ConsumerState<_AdsDiagnostics> createState() => _AdsDiagnosticsState();
+}
+
+class _AdsDiagnosticsState extends ConsumerState<_AdsDiagnostics> {
+  ({bool active, String? server, String? mode})? _dns;
+  String _adServer = '…';
+
+  @override
+  void initState() {
+    super.initState();
+    _checkDns();
+  }
+
+  Future<void> _checkDns() async {
+    try {
+      final d = await ref.read(deviceProvider).privateDns();
+      if (mounted) setState(() => _dns = d);
+    } catch (e) {
+      if (mounted) setState(() => _dns = (active: false, server: 'error: $e', mode: null));
+    }
+    try {
+      final r = await InternetAddress.lookup('googleads.g.doubleclick.net').timeout(const Duration(seconds: 4));
+      _adServer = r.map((a) => a.address).take(2).join(', ');
+    } catch (e) {
+      _adServer = 'lookup failed (blocked?)';
+    }
+    if (mounted) setState(() {});
+    ref.invalidate(blockingPrivateDnsProvider);
+  }
+
+  Widget _row(String k, String v, {Color? color}) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 3),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(width: 130, child: Text(k, style: Theme.of(context).textTheme.bodySmall)),
+        Expanded(
+          child: Text(
+            v,
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: color),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final ads = ref.watch(adsServiceProvider);
+    final account = ref.watch(accountProvider).value;
+    final cfg = ref.watch(adsConfigProvider).value;
+    final eligible = ref.watch(adsEligibleProvider);
+    final active = ref.watch(adsActiveProvider);
+    final debugNow = ref.watch(adsDebugNowProvider);
+    final adFree = ref.watch(adFreeUntilProvider);
+    final blocking = ref.watch(blockingPrivateDnsProvider);
+    final created = account?.createdAt;
+    final age = created == null ? null : DateTime.now().difference(created);
+
+    return ValueListenableBuilder<int>(
+      valueListenable: ads.diagnostics,
+      builder: (context, _, _) => SoftCard(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Ads & Private DNS diagnostics', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+            const SizedBox(height: 8),
+            _row('Build', kReleaseMode ? 'release (REAL ad units)' : 'debug (Google TEST ad units)'),
+            _row(
+              'Account created',
+              created == null ? 'unknown' : '${DateFormat.yMMMd().add_jm().format(created)} (${age!.inHours}h ago)',
+            ),
+            _row('Ads wait', '${cfg?.afterDays ?? 2} days · remote enabled: ${cfg?.enabled ?? true}'),
+            _row('Eligible / active', '$eligible / $active', color: active ? Brand.green : Brand.red),
+            if (adFree != null) _row('Ad-free until', DateFormat.MMMd().add_jm().format(adFree)),
+            _row('Consent', '${ads.consentStatus}${ads.consentError == null ? '' : ' · ${ads.consentError}'}'),
+            _row(
+              'SDK ready',
+              '${ads.ready}${ads.nonPersonalized ? ' (non-personalised)' : ''}',
+              color: ads.ready ? Brand.green : Brand.red,
+            ),
+            for (final f in ['native', 'banner', 'interstitial', 'appOpen', 'rewarded'])
+              _row(f, ads.lastResult[f] ?? '—', color: (ads.lastResult[f] ?? '').contains('error') ? Brand.red : null),
+            const Divider(height: 20),
+            _row('Private DNS mode', _dns?.mode ?? '…'),
+            _row('Private DNS host', _dns?.server ?? 'none (Off/Automatic)'),
+            _row('DNS active', '${_dns?.active ?? '…'}'),
+            _row('Ad server resolves', _adServer),
+            _row(
+              'Gate decision',
+              blocking.when(
+                data: (h) => h == null ? 'allowed' : 'BLOCK ($h)',
+                loading: () => '…',
+                error: (e, _) => 'error $e',
+              ),
+            ),
+            const SizedBox(height: 8),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              value: debugNow,
+              onChanged: (v) => ref.read(adsDebugNowProvider.notifier).set(v),
+              title: const Text('Show ads now (admin only)'),
+              subtitle: const Text('Skips the 2-day wait on this phone'),
+            ),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                OutlinedButton(onPressed: _checkDns, child: const Text('Re-check DNS')),
+                OutlinedButton(onPressed: ads.debugShowInterstitial, child: const Text('Test interstitial')),
+                OutlinedButton(onPressed: ads.start, child: const Text('Start SDK')),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text('App ID ${AdIds.appId}', style: Theme.of(context).textTheme.bodySmall),
+            Text(
+              'Error 3 = no fill (normal for new ad units/apps). Error 0/1 = config problem.',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

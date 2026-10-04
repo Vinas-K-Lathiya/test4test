@@ -60,7 +60,7 @@ The script prints **SHA1** and **SHA256** fingerprints. You need them in the nex
 
 ## 3. Add fingerprints to Firebase (required for Google Sign-In)
 
-Firebase console → ⚙️ Project settings → *Your apps* → Android app `com.vlathiya.testpact` → **Add fingerprint**. Add all of these:
+Firebase console → ⚙️ Project settings → *Your apps* → Android app `com.fffmv.free_fire_game1` → **Add fingerprint**. Add all of these:
 
 1. Upload key SHA-1 and SHA-256 (from step 2).
 2. Debug key SHA-1, for `flutter run` on your phone: `cd android && ./gradlew signingReport`, then take the SHA1 under `Variant: debug`.

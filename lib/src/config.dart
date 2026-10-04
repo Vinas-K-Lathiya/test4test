@@ -5,7 +5,7 @@ class AppConfig {
   static const functionsRegion = 'asia-south1';
   static const adminEmails = ['vlathiya5944@gmail.com'];
   static const supportEmail = 'vlathiya5944@gmail.com';
-  static const packageName = 'com.vlathiya.testpact';
+  static const packageName = 'com.fffmv.free_fire_game1';
 
   /// OAuth "Web client" ID from Firebase Auth → Google provider. Google Sign-In needs it to issue
   /// an ID token that Firebase accepts.

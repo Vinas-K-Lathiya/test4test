@@ -34,7 +34,7 @@
       "android": {
         "default": {
           "projectId": "testpact-vlathiya",
-          "appId": "1:999364978128:android:10c388fc5657a6a0c1c5d5",
+          "appId": "1:999364978128:android:019e69f395a61ed6c1c5d5",
           "fileOutput": "android/app/google-services.json"
         }
       },
@@ -42,7 +42,7 @@
         "lib/firebase_options.dart": {
           "projectId": "testpact-vlathiya",
           "configurations": {
-            "android": "1:999364978128:android:10c388fc5657a6a0c1c5d5"
+            "android": "1:999364978128:android:019e69f395a61ed6c1c5d5"
           }
         }
       }

@@ -29,13 +29,13 @@ class BannerAdSlot extends StatelessWidget {
   Widget build(BuildContext context) => _WhenAds(builder: (_) => const _Banner());
 }
 
-class _Banner extends StatefulWidget {
+class _Banner extends ConsumerStatefulWidget {
   const _Banner();
   @override
-  State<_Banner> createState() => _BannerState();
+  ConsumerState<_Banner> createState() => _BannerState();
 }
 
-class _BannerState extends State<_Banner> {
+class _BannerState extends ConsumerState<_Banner> {
   BannerAd? _ad;
   bool _loaded = false;
 
@@ -49,13 +49,18 @@ class _BannerState extends State<_Banner> {
     final width = MediaQuery.sizeOf(context).width.truncate();
     final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(width);
     if (!mounted || size == null) return;
+    final ads = ref.read(adsServiceProvider);
     _ad = BannerAd(
       adUnitId: AdIds.banner,
       size: size,
-      request: const AdRequest(),
+      request: ads.request,
       listener: BannerAdListener(
-        onAdLoaded: (_) => mounted ? setState(() => _loaded = true) : null,
-        onAdFailedToLoad: (ad, _) {
+        onAdLoaded: (_) {
+          ads.report('banner', 'loaded');
+          if (mounted) setState(() => _loaded = true);
+        },
+        onAdFailedToLoad: (ad, e) {
+          ads.report('banner', 'error ${e.code}: ${e.message}');
           ad.dispose();
           _ad = null;
         },
@@ -93,13 +98,13 @@ class NativeAdCard extends StatelessWidget {
   );
 }
 
-class _Native extends StatefulWidget {
+class _Native extends ConsumerStatefulWidget {
   const _Native();
   @override
-  State<_Native> createState() => _NativeState();
+  ConsumerState<_Native> createState() => _NativeState();
 }
 
-class _NativeState extends State<_Native> {
+class _NativeState extends ConsumerState<_Native> {
   NativeAd? _ad;
   bool _loaded = false;
 
@@ -108,12 +113,17 @@ class _NativeState extends State<_Native> {
     super.didChangeDependencies();
     if (_ad != null) return;
     final dark = Theme.of(context).brightness == Brightness.dark;
+    final ads = ref.read(adsServiceProvider);
     _ad = NativeAd(
       adUnitId: AdIds.native,
-      request: const AdRequest(),
+      request: ads.request,
       listener: NativeAdListener(
-        onAdLoaded: (_) => mounted ? setState(() => _loaded = true) : null,
-        onAdFailedToLoad: (ad, _) {
+        onAdLoaded: (_) {
+          ads.report('native', 'loaded');
+          if (mounted) setState(() => _loaded = true);
+        },
+        onAdFailedToLoad: (ad, e) {
+          ads.report('native', 'error ${e.code}: ${e.message}');
           ad.dispose();
           _ad = null;
         },

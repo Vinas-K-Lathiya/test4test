@@ -48,21 +48,31 @@ final adFreeUntilProvider = NotifierProvider<AdFreeController, DateTime?>(AdFree
 /// True when this user should see ads right now: enabled remotely, the account is older than
 /// [AdsConfig.afterDays], and no active ad-free reward.
 final adsActiveProvider = Provider<bool>((ref) {
-  final cfg = ref.watch(adsConfigProvider).value;
-  final account = ref.watch(accountProvider).value;
-  final adFree = ref.watch(adFreeUntilProvider);
-  if (cfg == null || !cfg.enabled || account == null || adFree != null) return false;
-  final since = account.createdAt;
-  if (since == null) return false;
-  return DateTime.now().difference(since) >= Duration(days: cfg.afterDays);
+  if (ref.watch(adFreeUntilProvider) != null) return false;
+  return ref.watch(adsEligibleProvider);
 });
 
-/// Same eligibility, ignoring the ad-free reward (used by the Private DNS gate and the reward offer).
+/// Admin-only switch (Admin → Test → diagnostics) to see ads immediately, skipping the wait.
+class AdsDebugNow extends Notifier<bool> {
+  static const _key = 'debug_ads_now';
+  @override
+  bool build() => ref.watch(prefsProvider).getBool(_key) ?? false;
+  Future<void> set(bool v) async {
+    await ref.read(prefsProvider).setBool(_key, v);
+    state = v;
+  }
+}
+
+final adsDebugNowProvider = NotifierProvider<AdsDebugNow, bool>(AdsDebugNow.new);
+
+/// Ads are enabled remotely and the account is old enough (ignores the ad-free reward).
 final adsEligibleProvider = Provider<bool>((ref) {
-  final cfg = ref.watch(adsConfigProvider).value;
-  final account = ref.watch(accountProvider).value;
-  if (cfg == null || !cfg.enabled || account?.createdAt == null) return false;
-  return DateTime.now().difference(account!.createdAt!) >= Duration(days: cfg.afterDays);
+  final cfg = ref.watch(adsConfigProvider).value ?? const AdsConfig(enabled: true, afterDays: 2);
+  if (!cfg.enabled) return false;
+  if (ref.watch(adsDebugNowProvider) && ref.watch(isAdminProvider)) return true;
+  final since = ref.watch(accountProvider).value?.createdAt;
+  if (since == null) return false;
+  return DateTime.now().difference(since) >= Duration(days: cfg.afterDays);
 });
 
 /// SDK start-up (with GDPR consent) and the full-screen formats with frequency caps.
@@ -81,6 +91,21 @@ class AdsService {
   /// Flips to true once the SDK is initialised and consent allows ads; ad widgets listen to it.
   final readyNotifier = ValueNotifier<bool>(false);
 
+  /// When consent info couldn't be fetched we still serve ads, but never personalised ones.
+  bool _nonPersonalized = false;
+  AdRequest get request => AdRequest(nonPersonalizedAds: _nonPersonalized);
+
+  // ---- Diagnostics (shown in Admin → Test) -------------------------------------------------
+  String consentStatus = 'not started';
+  String? consentError;
+  final lastResult = <String, String>{};
+  final diagnostics = ValueNotifier<int>(0);
+
+  void report(String format, String result) {
+    lastResult[format] = '${DateTime.now().toIso8601String().substring(11, 19)}  $result';
+    diagnostics.value++;
+  }
+
   /// Call once after sign-in. Shows Google's consent form where the law requires it (EEA/UK).
   Future<void> start() async {
     if (_started || !Platform.isAndroid) return;
@@ -89,18 +114,34 @@ class AdsService {
     ConsentInformation.instance.requestConsentInfoUpdate(
       ConsentRequestParameters(),
       () async {
-        await ConsentForm.loadAndShowConsentFormIfRequired((_) {});
+        await ConsentForm.loadAndShowConsentFormIfRequired((e) {
+          if (e != null) consentError = 'form: ${e.errorCode} ${e.message}';
+        });
         if (!done.isCompleted) done.complete();
       },
-      (_) {
+      (e) {
+        consentError = 'update: ${e.errorCode} ${e.message}';
         if (!done.isCompleted) done.complete();
       },
     );
-    await done.future.timeout(const Duration(seconds: 15), onTimeout: () {});
+    await done.future.timeout(
+      const Duration(seconds: 15),
+      onTimeout: () {
+        consentError ??= 'timeout';
+      },
+    );
+    consentStatus = (await ConsentInformation.instance.getConsentStatus()).name;
     _canRequest = await ConsentInformation.instance.canRequestAds();
+    if (!_canRequest && consentError != null) {
+      // Consent service unreachable / not configured: serve non-personalised ads only.
+      _canRequest = true;
+      _nonPersonalized = true;
+    }
+    diagnostics.value++;
     if (!_canRequest) return;
     await MobileAds.instance.initialize();
     readyNotifier.value = true;
+    diagnostics.value++;
     _preloadInterstitial();
     _preloadAppOpen();
   }
@@ -113,10 +154,16 @@ class AdsService {
     if (!ready || _interstitial != null) return;
     InterstitialAd.load(
       adUnitId: AdIds.interstitial,
-      request: const AdRequest(),
+      request: request,
       adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) => _interstitial = ad,
-        onAdFailedToLoad: (_) => _interstitial = null,
+        onAdLoaded: (ad) {
+          _interstitial = ad;
+          report('interstitial', 'loaded');
+        },
+        onAdFailedToLoad: (e) {
+          _interstitial = null;
+          report('interstitial', 'error ${e.code}: ${e.message}');
+        },
       ),
     );
   }
@@ -160,13 +207,17 @@ class AdsService {
     if (!ready || _appOpen != null) return;
     AppOpenAd.load(
       adUnitId: AdIds.appOpen,
-      request: const AdRequest(),
+      request: request,
       adLoadCallback: AppOpenAdLoadCallback(
         onAdLoaded: (ad) {
           _appOpen = ad;
           _appOpenLoadedAt = DateTime.now();
+          report('appOpen', 'loaded');
         },
-        onAdFailedToLoad: (_) => _appOpen = null,
+        onAdFailedToLoad: (e) {
+          _appOpen = null;
+          report('appOpen', 'error ${e.code}: ${e.message}');
+        },
       ),
     );
   }
@@ -205,10 +256,16 @@ class AdsService {
     final loaded = Completer<RewardedAd?>();
     RewardedAd.load(
       adUnitId: AdIds.rewarded,
-      request: const AdRequest(),
+      request: request,
       rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: loaded.complete,
-        onAdFailedToLoad: (_) => loaded.complete(null),
+        onAdLoaded: (ad) {
+          report('rewarded', 'loaded');
+          loaded.complete(ad);
+        },
+        onAdFailedToLoad: (e) {
+          report('rewarded', 'error ${e.code}: ${e.message}');
+          loaded.complete(null);
+        },
       ),
     );
     final ad = await loaded.future.timeout(const Duration(seconds: 20), onTimeout: () => null);
@@ -235,6 +292,27 @@ class AdsService {
     );
     return earned.future;
   }
+
+  /// Admin diagnostics: load and show one interstitial right now, ignoring caps.
+  Future<void> debugShowInterstitial() async {
+    if (!ready) {
+      report('interstitial', 'SDK not ready');
+      return;
+    }
+    InterstitialAd.load(
+      adUnitId: AdIds.interstitial,
+      request: request,
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          report('interstitial', 'loaded (debug)');
+          ad.show();
+        },
+        onAdFailedToLoad: (e) => report('interstitial', 'error ${e.code}: ${e.message}'),
+      ),
+    );
+  }
+
+  bool get nonPersonalized => _nonPersonalized;
 
   /// "Privacy options" entry for users in regions that require it.
   Future<bool> privacyOptionsRequired() async =>

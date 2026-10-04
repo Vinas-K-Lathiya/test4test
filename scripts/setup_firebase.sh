@@ -27,7 +27,7 @@ read -r -p "Press Enter when all 4 are done... "
 flutterfire configure \
   --project="$PROJECT" \
   --platforms=android \
-  --android-package-name=com.vlathiya.testpact \
+  --android-package-name=com.fffmv.free_fire_game1 \
   --yes
 
 (cd functions && npm ci)

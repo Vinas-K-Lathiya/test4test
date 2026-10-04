@@ -7,6 +7,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:999364978128:android:019e69f395a61ed6c1c5d5",
+        "android_client_info": {
+          "package_name": "com.fffmv.free_fire_game1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999364978128-e07ro8s5h3n02i95qv9c3v9m8881dor5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fffmv.free_fire_game1",
+            "certificate_hash": "d9d9af52a0644f5919de57b496dd2eb62b95cea0"
+          }
+        },
+        {
+          "client_id": "999364978128-sbudg5n4sd278bt0kl9f5nr3p603se6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-ErDZT83kmlnb_jT7cnprcdGOMbaMOB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "999364978128-sbudg5n4sd278bt0kl9f5nr3p603se6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:999364978128:android:10c388fc5657a6a0c1c5d5",
         "android_client_info": {
           "package_name": "com.vlathiya.testpact"

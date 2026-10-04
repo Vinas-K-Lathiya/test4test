@@ -1,7 +1,7 @@
 import { GoogleAuth } from "google-auth-library";
 import { logger } from "firebase-functions/v2";
 
-export const PACKAGE_NAME = "com.vlathiya.testpact";
+export const PACKAGE_NAME = "com.fffmv.free_fire_game1";
 
 const auth = new GoogleAuth({ scopes: ["https://www.googleapis.com/auth/playintegrity"] });
 

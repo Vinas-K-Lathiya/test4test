@@ -16,7 +16,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD-ErDZT83kmlnb_jT7cnprcdGOMbaMOB4',
-    appId: '1:999364978128:android:10c388fc5657a6a0c1c5d5',
+    appId: '1:999364978128:android:019e69f395a61ed6c1c5d5',
     messagingSenderId: '999364978128',
     projectId: 'testpact-vlathiya',
     storageBucket: 'testpact-vlathiya.firebasestorage.app',
